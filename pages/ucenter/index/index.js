@@ -13,6 +13,45 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         status: {},
     },
+    onLoad: function(options) {
+    },
+    onShow: function() {
+        let userInfo = wx.getStorageSync('userInfo');
+        if(userInfo == ''){
+            this.setData({
+                hasUserInfo: 0,
+            });
+        }
+        else{
+            this.setData({
+                hasUserInfo: 1,
+            });
+        }
+        this.setData({
+            userInfo: userInfo,
+        });
+        this.getJobInfo();
+        wx.removeStorageSync('categoryId');
+    },
+
+    onPullDownRefresh: function() {
+        wx.showNavigationBarLoading()
+        this.getOrderInfo();
+        wx.hideNavigationBarLoading() //完成停止加载
+        wx.stopPullDownRefresh() //停止下拉刷新
+    },
+    getJobInfo: function(e) {
+        let that = this;
+        util.request(api.JobCountInfo).then(function(res) {
+            if (res.errno === 200) {
+                let status = res.data;
+                that.setData({
+                    status: status
+                });
+            }
+        });
+    },
+
     goProfile: function (e) {
         let res = util.loginNow();
         if (res == true) {
@@ -44,11 +83,11 @@ Page({
             url: '/pages/ucenter/about/index',
         });
     },
-    toFootprint: function(e) {
+    toUserList: function(e) {
         let res = util.loginNow();
         if (res == true) {
             wx.navigateTo({
-                url: '/pages/ucenter/footprint/index',
+                url: '/pages/user-list/user-list?type=0',
             });
         }
     },
@@ -56,43 +95,5 @@ Page({
         wx.navigateTo({
             url: '/pages/app-auth/index',
         });
-    },
-    onLoad: function(options) {
-    },
-    onShow: function() {
-        let userInfo = wx.getStorageSync('userInfo');
-        if(userInfo == ''){
-            this.setData({
-                hasUserInfo: 0,
-            });
-        }
-        else{
-            this.setData({
-                hasUserInfo: 1,
-            });
-        }
-        this.setData({
-            userInfo: userInfo,
-        });
-        this.getOrderInfo();
-        wx.removeStorageSync('categoryId');
-    },
-
-    onPullDownRefresh: function() {
-        wx.showNavigationBarLoading()
-        this.getOrderInfo();
-        wx.hideNavigationBarLoading() //完成停止加载
-        wx.stopPullDownRefresh() //停止下拉刷新
-    },
-    getOrderInfo: function(e) {
-        let that = this;
-        util.request(api.OrderCountInfo).then(function(res) {
-            if (res.errno === 0) {
-                let status = res.data;
-                that.setData({
-                    status: status
-                });
-            }
-        });
-    },
+    }
 })

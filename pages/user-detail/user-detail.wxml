@@ -1,0 +1,56 @@
+<view class="container">
+    <view class="userinfo">
+        <view class='head-wrap'>
+            <view class="head-l">
+                <view class='l'>
+                    <image class='avatar' src="{{userInfo.avatar}}"></image>
+                </view>
+                <view class='r'>
+                    <view class='t'>
+                        <view class='name'>{{userInfo.nickName}}</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class='edit-container'>
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/receiver.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input' disabled='true' value="角色: {{userInfo.userType}}"></input>
+            </view>
+        </view>
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/pay-success.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input' disabled='true' value="是否家长: {{userInfo.isOwnerStr}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/icon-time.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input' disabled='true' value="加入时间: {{userInfo.lastJoinTime}}"></input>
+            </view>
+        </view>
+
+    </view>
+
+    <view class='btn-wrap'  wx:if="{{select == 1}}" bindtap="goCreateJobPage">
+        <view class="btn active">选择</view>
+    </view>
+    <view class='btn-wrap'  wx:if="{{edit == 1}}" bindtap="saveUser">
+        <view class="btn active">保存</view>
+    </view>
+    <view class='delete-wrap'  wx:if="{{candDeleted == 1}}" bindtap="deleteUser">
+        <view class="btn active">移出家庭</view>
+    </view>
+   
+</view>

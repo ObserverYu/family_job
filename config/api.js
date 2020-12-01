@@ -1,9 +1,19 @@
-// const ApiRootUrl = 'http://localhost:8360/api/';
-const ApiRootUrl = 'https://www.hiolabs.com/api/';
+const ApiRootUrl = 'http://localhost:9410/';
+//const ApiRootUrl = 'https://www.hiolabs.com/api/';
 
 module.exports = {
-    // 登录
-    AuthLoginByWeixin: ApiRootUrl + 'auth/loginByWeixin', //微信登录
+    // 个人
+    AuthLoginByWeixin: ApiRootUrl + 'user/loginByWeixin', //微信登录
+    GetUsers: ApiRootUrl + 'user/userList',
+    GetUserDetail:ApiRootUrl + 'user/userDetail',
+    // 家务
+    JobCountInfo: ApiRootUrl + 'job/jobCount', // 我的页面获取家务数据
+    // 家庭
+    CreateFamily:ApiRootUrl + 'family/createFamily',
+    GetFamily:ApiRootUrl + 'family/getFamily',
+
+
+    OrderCountInfo: ApiRootUrl + 'job/jobCount', // 我的页面获取订单数状态
     // 首页
     IndexUrl: ApiRootUrl + 'index/appInfo', //首页数据接口
     // 分类
@@ -38,7 +48,7 @@ module.exports = {
     OrderCancel: ApiRootUrl + 'order/cancel', //取消订单
     OrderConfirm: ApiRootUrl + 'order/confirm', //物流详情
     OrderCount: ApiRootUrl + 'order/count', // 获取订单数
-    OrderCountInfo: ApiRootUrl + 'order/orderCount', // 我的页面获取订单数状态
+    
     OrderExpressInfo: ApiRootUrl + 'order/express', //物流信息
     OrderGoods: ApiRootUrl + 'order/orderGoods', // 获取checkout页面的商品列表
     // 足迹

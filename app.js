@@ -52,9 +52,12 @@ App({
         userInfo: {
             nickname: '点我登录',
             username: '点击登录',
-            avatar: 'http://lucky-icon.meiweiyuxian.com/hio/default_avatar_big.png'
+            avatar: ''
         },
         token: '',
+        family:{
+            name:'点我创建家庭'
+        }
     }
 
 })

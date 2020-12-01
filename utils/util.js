@@ -74,14 +74,13 @@ function request(url, data = {}, method = "GET") {
             method: method,
             header: {
                 'Content-Type': 'application/json',
-                'X-Nideshop-Token': wx.getStorageSync('token')
+                'auth-token': wx.getStorageSync('token')
             },
             success: function(res) {
-                if (res.statusCode == 200) {
-
-                    if (res.data.errno == 401) {
+                console.info(res);
+                if(res.statusCode == 200){
+                     if(res.data.code == 401){
                         //需要登录后才可以操作
-
                         let code = null;
                         return login().then((res) => {
                             code = res.code;
@@ -92,7 +91,7 @@ function request(url, data = {}, method = "GET") {
                                 code: code,
                                 userInfo: userInfo
                             }, 'POST').then(res => {
-                                if (res.errno === 0) {
+                                if (res.code === 200) {
                                     //存储用户信息
                                     wx.setStorageSync('userInfo', res.data.userInfo);
                                     wx.setStorageSync('token', res.data.token);
@@ -106,13 +105,13 @@ function request(url, data = {}, method = "GET") {
                         }).catch((err) => {
                             reject(err);
                         })
-                    } else {
+                       
+                    }else {
                         resolve(res.data);
                     }
-                } else {
+                }else{
                     reject(res.errMsg);
                 }
-
             },
             fail: function(err) {
                 reject(err)

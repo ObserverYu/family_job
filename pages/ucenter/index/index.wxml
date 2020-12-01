@@ -15,7 +15,7 @@
                 </view>
                 <view class='r'>
                     <view class='t'>
-                        <view class='name'>{{userInfo.nickname}}</view>
+                        <view class='name'>{{userInfo.nickName}}</view>
                     </view>
                 </view>
             </view>
@@ -28,10 +28,10 @@
         <view class='header' data-index='0' bindtap='toOrderListTap'>
             <view class='top-title'>
                 <view class='left-line'></view>
-                <view class='text'>我的订单</view>
+                <view class='text'>我发布的家务</view>
             </view>
             <view class='see-more'>
-                <view class="text">查看全部订单</view>
+                <view class="text">查看全部</view>
                 <view class="arrow"></view>
             </view>
         </view>
@@ -40,73 +40,77 @@
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/icon-pay-r.png'>
                     </image>
-                    <view wx:if="{{status.toPay > 0 }}" class='red-point'>{{status.toPay}}</view>
+                    <view wx:if="{{status.toPay > 0 }}" class='red-point'>{{status.othersToCheck}}</view>
                 </view>
-                <text class='order-txt'>待付款</text>
+                <text class='order-txt'>待接受</text>
             </view>
             <view class='icon-wrap' data-index='2' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/icon-delivery-r.png'>
                     </image>
-                    <view wx:if="{{status.toDelivery > 0 }}" class='red-point'>{{status.toDelivery}}</view>
+                    <view wx:if="{{status.toDelivery > 0 }}" class='red-point'>{{status.othersToFinish}}</view>
                 </view>
-                <text class='order-txt'>待发货</text>
+                <text class='order-txt'>待完成</text>
             </view>
             <view class='icon-wrap' data-index='3' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/icon-onroad-r.png'>
                     </image>
-                    <view wx:if="{{status.toReceive > 0 }}" class='red-point'>{{status.toReceive}}</view>
+                    <view wx:if="{{status.toReceive > 0 }}" class='red-point'>{{status.othersFinished}}</view>
                 </view>
-                <text class='order-txt'>待收货</text>
+                <text class='order-txt'>已完成</text>
             </view>
         </view>
     </view>
+
+    <view class="order-container">
+        <view class='header' data-index='0' bindtap='toOrderListTap'>
+            <view class='top-title'>
+                <view class='left-line'></view>
+                <view class='text'>我收到的家务</view>
+            </view>
+            <view class='see-more'>
+                <view class="text">查看全部</view>
+                <view class="arrow"></view>
+            </view>
+        </view>
+        <view class='btn-container'>
+            <view class='icon-wrap' data-index='1' bindtap='toOrderListTap'>
+                <view class='order-icon-wrap'>
+                    <image class='order-icon' src='/images/icon/icon-pay-r.png'>
+                    </image>
+                    <view wx:if="{{status.toPay > 0 }}" class='red-point'>{{status.myToCheck}}</view>
+                </view>
+                <text class='order-txt'>待审核</text>
+            </view>
+            <view class='icon-wrap' data-index='2' bindtap='toOrderListTap'>
+                <view class='order-icon-wrap'>
+                    <image class='order-icon' src='/images/icon/icon-delivery-r.png'>
+                    </image>
+                    <view wx:if="{{status.toDelivery > 0 }}" class='red-point'>{{status.myToFinish}}</view>
+                </view>
+                <text class='order-txt'>待完成</text>
+            </view>
+            <view class='icon-wrap' data-index='3' bindtap='toOrderListTap'>
+                <view class='order-icon-wrap'>
+                    <image class='order-icon' src='/images/icon/icon-onroad-r.png'>
+                    </image>
+                    <view wx:if="{{status.toReceive > 0 }}" class='red-point'>{{status.myFinished}}</view>
+                </view>
+                <text class='order-txt'>已完成</text>
+            </view>
+        </view>
+    </view>
+
     <view class="li-wrap">
-        <view class="list" bindtap="toAddressList">
+        <view class="list" bindtap="toUserList">
             <view class="list-l">
                 <view class="icon">
-                    <image class="img" src="/images/icon/icon-address-r.png"></image>
+                    <image class="img" src="/images/icon/icon-post.png"></image>
                 </view>
-                <view class="text">地址管理</view>
+                <view class="text">发布任务</view>
             </view>
             <view class="arrow"></view>
         </view>
-    </view>
-    <view class="li-wrap">
-        <view class="list" bindtap="toFootprint">
-            <view class="list-l">
-                <view class="icon">
-                    <image class="img" src="/images/icon/icon-footprint-r.png"></image>
-                </view>
-                <view class="text">我的足迹</view>
-            </view>
-            <view class="arrow"></view>
-        </view>
-        <button class="contact-btn" session-from='{"nickName":"{{userInfo.nickname}}","avatarUrl":"{{userInfo.avatar}}"}' open-type="contact">
-            <view class="list-l">
-                <view class="icon">
-                    <image class="img" src="/images/icon/icon-service-r.png"></image>
-                </view>
-                <view class="text">联系客服</view>
-            </view>
-            <view class="arrow"></view>
-        </button>
-        <view class="list" bindtap="toAbout">
-            <view class="list-l">
-                <view class="icon">
-                    <image class="img" src="/images/icon/icon-about-r.png"></image>
-                </view>
-                <view class="text">关于我们</view>
-            </view>
-            <view class="arrow"></view>
-        </view>
-    </view>
-    <view class="company">
-        <view class="c-wrap">
-            <view class="text">海风小店</view>
-            <view class="line"></view>
-        </view>
-        <view class="tip">开源微信小程序商城</view>
     </view>
 </view>

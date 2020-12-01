@@ -1,145 +1,113 @@
-const util = require('../../utils/util.js');
-const api = require('../../config/api.js');
-const user = require('../../services/user.js');
+var util = require('../../utils/util.js');
+var api = require('../../config/api.js');
+var user = require('../../services/user.js');
 
-//获取应用实例
 const app = getApp()
 
 Page({
     data: {
-        floorGoods: [],
-        openAttr: false,
-        showChannel: 0,
-        showBanner: 0,
-        showBannerImg: 0,
-        goodsCount: 0,
-        banner: [],
-        index_banner_img: 0,
         userInfo: {},
-        imgurl: '',
-        sysHeight: 0,
-        loading: 0,
-        autoplay:true
+        family:{},
+        hasFamily: 0,
+        hasUserInfo: false,
+        canIUse: wx.canIUse('button.open-type.getUserInfo'),
+        status: {},
     },
-    onHide:function(){
-        this.setData({
-            autoplay:false
-        })
+
+    onLoad: function(options) {
     },
-    goSearch: function () {
-        wx.navigateTo({
-            url: '/pages/search/search',
-        })
-    },
-    goCategory: function (e) {
-        let id = e.currentTarget.dataset.cateid;
-        wx.setStorageSync('categoryId', id);
-        wx.switchTab({
-            url: '/pages/category/index',
-        })
-    },
-    getCatalog: function () {
-        let that = this;
-        util.request(api.GoodsCount).then(function (res) {
-            that.setData({
-                goodsCount: res.data.goodsCount
-            });
-        });
-    },
-    handleTap: function (event) {
-        //阻止冒泡 
-    },
-    onShareAppMessage: function () {
-        let info = wx.getStorageSync('userInfo');
-        return {
-            title: '海风小店',
-            desc: '开源微信小程序商城',
-            path: '/pages/index/index?id=' + info.id
-        }
-    },
-    toDetailsTap: function () {
-        wx.navigateTo({
-            url: '/pages/goods-details/index',
-        });
-    },
-    getIndexData: function () {
-        let that = this;
-        util.request(api.IndexUrl).then(function (res) {
-            if (res.errno === 0) {
-                that.setData({
-                    floorGoods: res.data.categoryList,
-                    banner: res.data.banner,
-                    channel: res.data.channel,
-                    notice: res.data.notice,
-                    loading: 1,
-                });
-            }
-        });
-    },
-    onLoad: function (options) {
-        let systemInfo = wx.getStorageSync('systemInfo');
-        var scene = decodeURIComponent(options.scene);
-        this.getCatalog();
-    },
-    onShow: function () {
-        this.getCartNum();
-        this.getChannelShowInfo();
-        this.getIndexData();
-        var that = this;
+    onShow: function() {
         let userInfo = wx.getStorageSync('userInfo');
-        if (userInfo != '') {
-            that.setData({
-                userInfo: userInfo,
+        if(userInfo == ''){
+            this.setData({
+                hasUserInfo: 0,
             });
-        };
-        let info = wx.getSystemInfoSync();
-        let sysHeight = info.windowHeight - 100;
+        }
+        else{
+            this.setData({
+                hasUserInfo: 1,
+            });
+        }
         this.setData({
-            sysHeight: sysHeight,
-            autoplay:true
+            userInfo: userInfo,
         });
+
+        let that =this;
+        user.getFamily().then(res=>{
+            console.info(res);
+            console.info(res.data);
+            if(res.data != '' && res.data != null){
+                that.setData({hasFamily:1,family:res.data})
+                that.family = res.data;
+            }
+        })
+
         wx.removeStorageSync('categoryId');
     },
-    getCartNum: function () {
-        util.request(api.CartGoodsCount).then(function (res) {
-            if (res.errno === 0) {
-                let cartGoodsCount = '';
-                if (res.data.cartTotal.goodsCount == 0) {
-                    wx.removeTabBarBadge({
-                        index: 2,
-                    })
-                } else {
-                    cartGoodsCount = res.data.cartTotal.goodsCount + '';
-                    wx.setTabBarBadge({
-                        index: 2,
-                        text: cartGoodsCount
-                    })
-                }
-            }
+    goProfile: function (e) {
+        let res = util.loginNow();
+        if (res == true) {
+            wx.navigateTo({
+                url: '/pages/ucenter/settings/index',
+            });
+        }
+    },
+    toOrderListTap: function(event) {
+        let res = util.loginNow();
+        if (res == true) {
+            let showType = event.currentTarget.dataset.index;
+            wx.setStorageSync('showType', showType);
+            wx.navigateTo({
+                url: '/pages/ucenter/order-list/index?showType=' + showType,
+            });
+        }
+    },
+    toAddressList: function(e) {
+        let res = util.loginNow();
+        if (res == true) {
+            wx.navigateTo({
+                url: '/pages/ucenter/address/index?type=0',
+            });
+        }
+    },
+    toAbout: function () {
+        wx.navigateTo({
+            url: '/pages/ucenter/about/index',
         });
     },
-    getChannelShowInfo: function (e) {
+    toFootprint: function(e) {
+        let res = util.loginNow();
+        if (res == true) {
+            wx.navigateTo({
+                url: '/pages/ucenter/footprint/index',
+            });
+        }
+    },
+    goAuth: function(e) {
+        wx.navigateTo({
+            url: '/pages/app-auth/index',
+        });
+    },
+    goCreateFamily: function(e) {
+        wx.navigateTo({
+            url: '/pages/ucenter/family-detail/index',
+        });
+    },
+    onPullDownRefresh: function() {
+        wx.showNavigationBarLoading()
+        this.getOrderInfo();
+        wx.hideNavigationBarLoading() //完成停止加载
+        wx.stopPullDownRefresh() //停止下拉刷新
+    },
+    getOrderInfo: function(e) {
         let that = this;
-        util.request(api.ShowSettings).then(function (res) {
+        util.request(api.OrderCountInfo).then(function(res) {
             if (res.errno === 0) {
-                let show_channel = res.data.channel;
-                let show_banner = res.data.banner;
-                let show_notice = res.data.notice;
-                let index_banner_img = res.data.index_banner_img;
+                let status = res.data;
                 that.setData({
-                    show_channel: show_channel,
-                    show_banner: show_banner,
-                    show_notice: show_notice,
-                    index_banner_img: index_banner_img
+                    status: status
                 });
             }
         });
-    },
-    onPullDownRefresh: function () {
-        wx.showNavigationBarLoading()
-        this.getIndexData();
-        this.getChannelShowInfo();
-        wx.hideNavigationBarLoading() //完成停止加载
-        wx.stopPullDownRefresh() //停止下拉刷新
     },
 })

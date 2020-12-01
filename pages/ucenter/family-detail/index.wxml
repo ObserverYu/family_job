@@ -1,0 +1,34 @@
+<view class="container">
+    <view class='edit-container'>
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/address.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input' bindinput="bindinputName" placeholder='家庭名' value="{{family.name}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item" wx:if="{{familyId != 0}}">
+            <view class="icon">
+                <image class="img" src="/images/icon/receiver.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' disabled='true' class='a-input'  placeholder="家长:{{family.ownerName}}" ></input>
+            </view>
+        </view>
+
+        <view class="a-item" wx:if="{{familyId != 0}}">
+            <view class="icon">
+                <image class="img" src="/images/icon/mobile.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' disabled='true' class='a-input'  placeholder="创建时间:{{family.craeteTime}}" ></input>
+            </view>
+        </view>
+    </view>
+
+    <view class='btn-wrap' bindtap="createFamily" wx:if="{{familyId == 0}}">
+        <view class="btn active">保存</view>
+    </view>
+</view>
