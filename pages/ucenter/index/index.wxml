@@ -38,25 +38,25 @@
         <view class='btn-container'>
             <view class='icon-wrap' data-index='1' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/icon-pay-r.png'>
+                    <image class='order-icon' src='/images/icon/new/灵感.png'>
                     </image>
-                    <view wx:if="{{status.toPay > 0 }}" class='red-point'>{{status.othersToCheck}}</view>
+                    <view wx:if="{{status.othersToCheck > 0 }}" class='red-point'>{{status.othersToCheck}}</view>
                 </view>
                 <text class='order-txt'>待接受</text>
             </view>
             <view class='icon-wrap' data-index='2' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/icon-delivery-r.png'>
+                    <image class='order-icon' src='/images/icon/new/提醒.png'>
                     </image>
-                    <view wx:if="{{status.toDelivery > 0 }}" class='red-point'>{{status.othersToFinish}}</view>
+                    <view wx:if="{{status.othersToFinish > 0 }}" class='red-point'>{{status.othersToFinish}}</view>
                 </view>
                 <text class='order-txt'>待完成</text>
             </view>
             <view class='icon-wrap' data-index='3' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/icon-onroad-r.png'>
+                    <image class='order-icon' src='/images/icon/new/标签.png'>
                     </image>
-                    <view wx:if="{{status.toReceive > 0 }}" class='red-point'>{{status.othersFinished}}</view>
+                    <view wx:if="{{status.othersFinished > 0 }}" class='red-point'>{{status.othersFinished}}</view>
                 </view>
                 <text class='order-txt'>已完成</text>
             </view>
@@ -77,25 +77,25 @@
         <view class='btn-container'>
             <view class='icon-wrap' data-index='1' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/icon-pay-r.png'>
+                    <image class='order-icon' src='/images/icon/new/灵感.png'>
                     </image>
-                    <view wx:if="{{status.toPay > 0 }}" class='red-point'>{{status.myToCheck}}</view>
+                    <view wx:if="{{status.myToCheck > 0 }}" class='red-point'>{{status.myToCheck}}</view>
                 </view>
                 <text class='order-txt'>待审核</text>
             </view>
             <view class='icon-wrap' data-index='2' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/icon-delivery-r.png'>
+                    <image class='order-icon' src='/images/icon/new/提醒.png'>
                     </image>
-                    <view wx:if="{{status.toDelivery > 0 }}" class='red-point'>{{status.myToFinish}}</view>
+                    <view wx:if="{{status.myToFinish > 0 }}" class='red-point'>{{status.myToFinish}}</view>
                 </view>
                 <text class='order-txt'>待完成</text>
             </view>
             <view class='icon-wrap' data-index='3' bindtap='toOrderListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/icon-onroad-r.png'>
+                    <image class='order-icon' src='/images/icon/new/标签.png'>
                     </image>
-                    <view wx:if="{{status.toReceive > 0 }}" class='red-point'>{{status.myFinished}}</view>
+                    <view wx:if="{{status.myFinished > 0 }}" class='red-point'>{{status.myFinished}}</view>
                 </view>
                 <text class='order-txt'>已完成</text>
             </view>

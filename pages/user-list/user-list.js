@@ -15,6 +15,7 @@ Page({
         })
     },
     getUsers() {
+        util.loginNow();
         let that = this;
         util.request(api.GetUsers).then(function(res) {
             if (res.code === 200) {

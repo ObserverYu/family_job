@@ -8,6 +8,10 @@ module.exports = {
     GetUserDetail:ApiRootUrl + 'user/userDetail',
     // 家务
     JobCountInfo: ApiRootUrl + 'job/jobCount', // 我的页面获取家务数据
+    ListAllJobType: ApiRootUrl + 'job/listAllType', //所有家务类别
+    ListJobByType: ApiRootUrl + 'job/listJobInfoByType', // 家务列表
+    ListAllJobTypeAndInfo: ApiRootUrl + 'job/listAllTypeAndInfo', // 所有家务类别和信息列表
+    CreateJobToUser: ApiRootUrl + 'job/createJobToUser', // 创建
     // 家庭
     CreateFamily:ApiRootUrl + 'family/createFamily',
     GetFamily:ApiRootUrl + 'family/getFamily',

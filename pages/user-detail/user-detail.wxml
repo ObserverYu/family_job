@@ -40,7 +40,6 @@
                 <input cursor-spacing='100' class='a-input' disabled='true' value="加入时间: {{userInfo.lastJoinTime}}"></input>
             </view>
         </view>
-
     </view>
 
     <view class='btn-wrap'  wx:if="{{select == 1}}" bindtap="goCreateJobPage">

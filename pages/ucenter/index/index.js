@@ -43,7 +43,7 @@ Page({
     getJobInfo: function(e) {
         let that = this;
         util.request(api.JobCountInfo).then(function(res) {
-            if (res.errno === 200) {
+            if (res.code === 200) {
                 let status = res.data;
                 that.setData({
                     status: status

@@ -65,7 +65,7 @@
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-member.png"></image>
                 </view>
-                <view class="text">家庭管理</view>
+                <view class="text">成员管理</view>
             </view>
             <view class="arrow"></view>
         </view>
@@ -76,6 +76,16 @@
                     <image class="img" src="/images/icon/icon-tongji.png"></image>
                 </view>
                 <view class="text">家务统计</view>
+            </view>
+            <view class="arrow"></view>
+        </view>
+
+        <view class="list" bindtap="toAbout">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/new/列表.png"></image>
+                </view>
+                <view class="text">每日家务</view>
             </view>
             <view class="arrow"></view>
         </view>

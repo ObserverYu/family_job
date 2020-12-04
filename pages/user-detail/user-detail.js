@@ -84,8 +84,13 @@ Page({
     },
 
     goCreateJobPage: function() {
+        let that = this;
         wx.navigateTo({
-            url: '/pages/create-job/create-job?userId=' + this.data.userInfo.id,
+            url: '/pages/create-job/create-job?isCreate='+1+'&userRole='+1
+            ,success: function(res) {
+                // 通过eventChannel向被打开页面传送数据
+                res.eventChannel.emit('userInfoEven', that.data.userInfo)
+              }
         })
     },
 

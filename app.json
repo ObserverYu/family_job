@@ -2,8 +2,13 @@
   "pages": [
       "pages/ucenter/index/index",
       "pages/index/index",
-      "pages/category/index",
-      "pages/cart/cart"
+      "pages/user-detail/user-detail",
+      "pages/app-auth/index",
+      "pages/create-job/create-job",
+      "pages/user-list/user-list",
+      "pages/ucenter/family-detail/index",
+      "pages/success-page/success-page"
+
   ],
   "style": "v2",
   "useExtendedLib": {
