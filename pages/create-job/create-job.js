@@ -208,8 +208,13 @@ Page({
             costStep : costStep
         }
         console.info(param);
+        wx.showLoading({
+            title: '提交中',
+            mask:true
+          })
         util.request(api.CreateJobToUser, param, 'POST')
         .then(function(res) {
+            wx.hideLoading()
             if (res.code === 200) {
                 wx.reLaunch({
                   url: '../success-page/success-page?status=1',

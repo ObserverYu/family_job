@@ -1,0 +1,90 @@
+<view class="container">
+	<view class="tab-nav">
+		<view class="tab {{ state == -1 ? 'active' : ''}}" bindtap="switchTab" data-state='-1'>全部</view>
+
+		<view class="tab {{ state == 0 ? 'active' : ''}}" bindtap="switchTab" data-state='0'>
+			<view wx:if="{{isMineJob == 1 && count.myToCheck > 0 }}" class='list-num'>{{count.myToCheck}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersToCheck > 0 }}" class='list-num'>{{count.othersToCheck}}</view>待审核
+		</view>
+
+		<view class="tab {{ state == 1 ? 'active' : ''}}" bindtap="switchTab" data-state='1'>
+			<view wx:if="{{isMineJob == 1 && count.myToFinish > 0 }}" class='list-num'>{{count.myToFinish}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersToFinish > 0 }}" class='list-num'>{{count.othersToFinish}}</view>待完成
+		</view>
+
+		<view class="tab {{ state == 4 ? 'active' : ''}}" bindtap="switchTab" data-state='4'>
+			<view wx:if="{{isMineJob == 1 && count.myFinished > 0 }}" class='list-num'>{{count.myFinished}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersFinished > 0 }}" class='list-num'>{{count.othersFinished}}</view>已完成
+		</view>
+
+		<view class="tab {{ state == 3 ? 'active' : ''}}" bindtap="switchTab" data-state='3'>
+			<view wx:if="{{isMineJob == 1 && count.myRefused > 0 }}" class='list-num'>{{count.myRefused}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersRefused > 0 }}" class='list-num'>{{count.othersRefused}}</view>已拒绝
+		</view>
+
+		<view class="tab {{ state == 2 ? 'active' : ''}}" bindtap="switchTab" data-state='2'>
+					<view wx:if="{{isMineJob == 1 && count.myExpired > 0 }}" class='list-num'>{{count.myExpired}}</view>
+					<view wx:if="{{isMineJob == 0 && count.othersExpired > 0 }}" class='list-num'>{{count.othersExpired}}</view>已过期
+		</view>
+	</view>
+
+	<view class="no-order {{jobList.length > 0? 'show':'' }}" hidden="" wx:if="{{jobList.length <= 0}}">
+		<image src="/images/icon/no-order.png" class="no-order-img"></image>
+		<view class="text">没有相关状态的任务</view>
+		<view  class="to-index-btn" bindtap="toIndexPage">
+			返回首页
+		</view>
+	</view>
+
+	<view wx:else class="wrap">
+		<!--  待付款  -->
+		<view bindtap='toOrderDetails' class='order-list-wrap' data-id="{{item.id}}" wx:for="{{jobList}}" wx:key="id">
+			
+			<view class='list-top-wrap'>
+				<view class='time'>{{item.updateTime}}</view>
+				<view class='status'>
+					<view class="order-status">{{item.stateStr}}</view>
+				</view>
+			</view>
+
+			<view class='btn-container'>
+					<view class='icon-wrap' bindtap='goUserDetail'>
+							<view class='order-icon-wrap'>
+									<image class='order-icon' src='{{item.creatorAvatar}}'></image>
+							</view>
+							<text class='order-txt'>{{item.creatorName}}</text>
+					</view>
+					<view class='icon-wrap'>
+							<view class='order-icon-wrap'>
+									<image class='order-icon' src='/images/icon/new/提醒.png'>
+									</image>
+							</view>
+							<text class='order-txt'>指派→</text>
+					</view>
+
+					<view class='icon-wrap' bindtap='goUserDetail'>
+							<view class='order-icon-wrap'>
+									<image class='order-icon' src='{{item.userAvatar}}'>
+									</image>
+							</view>
+							<text class='order-txt'>{{item.userName}}</text>
+					</view>
+
+		</view>
+			<view class='order-price-wrap'>
+				<view class='order-price'>
+					<view class='price-label'>任务：</view>
+					<view class='price-sum'>{{item.name}}</view>
+				</view>
+			</view>
+			<!-- 待付款 -->
+			<!-- <view class="order-edit" wx:if="{{item.handleOption.cancel && item.handleOption.pay}}">
+				<view catchtap='payOrder' class="edit-btn" data-orderid="{{item.id}}">继续支付</view>
+			</view> -->
+			<!-- <view wx:else class="order-edit">
+				<view class="dele-btn">查看详情</view>
+			</view> -->
+		</view>
+		<view wx:if="{{showTips}}" class="no-more-goods">没有更多啦</view>
+	</view>
+</view>

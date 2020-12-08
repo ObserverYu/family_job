@@ -104,9 +104,8 @@ page {
 }
 
 .head-wrap .head-l .l .avatar {
-    width: 110rpx;
-    height: 110rpx;
-    border-radius: 90rpx;
+    width: 80rpx;
+    height: 80rpx;
 }
 
 .head-wrap .head-l .l .crown {

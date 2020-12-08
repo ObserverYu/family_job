@@ -12,6 +12,7 @@ module.exports = {
     ListJobByType: ApiRootUrl + 'job/listJobInfoByType', // 家务列表
     ListAllJobTypeAndInfo: ApiRootUrl + 'job/listAllTypeAndInfo', // 所有家务类别和信息列表
     CreateJobToUser: ApiRootUrl + 'job/createJobToUser', // 创建
+    ListMyJob: ApiRootUrl + 'job/listMyJob', // 我的家务列表
     // 家庭
     CreateFamily:ApiRootUrl + 'family/createFamily',
     GetFamily:ApiRootUrl + 'family/getFamily',

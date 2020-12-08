@@ -19,24 +19,21 @@
                     </view>
                 </view>
             </view>
-            <view class="head-r">
-                <view class="arrow"></view>
-            </view>
         </view>
     </view>
     <view class="order-container">
-        <view class='header' data-index='0' bindtap='toOrderListTap'>
+        <view class='header' data-isminejob='0' data-state='-1' bindtap='toJobListTap'>
             <view class='top-title'>
                 <view class='left-line'></view>
-                <view class='text'>我发布的家务</view>
+                <view class='text'>我发布的</view>
             </view>
             <view class='see-more'>
-                <view class="text">查看全部</view>
+                <view class="text">查看全部家务</view>
                 <view class="arrow"></view>
             </view>
         </view>
         <view class='btn-container'>
-            <view class='icon-wrap' data-index='1' bindtap='toOrderListTap'>
+            <view class='icon-wrap' data-isminejob='0' data-state='0' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/new/灵感.png'>
                     </image>
@@ -44,7 +41,7 @@
                 </view>
                 <text class='order-txt'>待接受</text>
             </view>
-            <view class='icon-wrap' data-index='2' bindtap='toOrderListTap'>
+            <view class='icon-wrap' data-isminejob='0' data-state='1' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/new/提醒.png'>
                     </image>
@@ -52,7 +49,7 @@
                 </view>
                 <text class='order-txt'>待完成</text>
             </view>
-            <view class='icon-wrap' data-index='3' bindtap='toOrderListTap'>
+            <view class='icon-wrap' data-isminejob='0' data-state='4' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/new/标签.png'>
                     </image>
@@ -64,18 +61,18 @@
     </view>
 
     <view class="order-container">
-        <view class='header' data-index='0' bindtap='toOrderListTap'>
+        <view class='header' data-isminejob='1' data-state='-1' bindtap='toJobListTap'>
             <view class='top-title'>
                 <view class='left-line'></view>
-                <view class='text'>我收到的家务</view>
+                <view class='text'>我收到的</view>
             </view>
             <view class='see-more'>
-                <view class="text">查看全部</view>
+                <view class="text">查看全部家务</view>
                 <view class="arrow"></view>
             </view>
         </view>
         <view class='btn-container'>
-            <view class='icon-wrap' data-index='1' bindtap='toOrderListTap'>
+            <view class='icon-wrap' data-isminejob='1' data-state='0' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/new/灵感.png'>
                     </image>
@@ -83,7 +80,7 @@
                 </view>
                 <text class='order-txt'>待审核</text>
             </view>
-            <view class='icon-wrap' data-index='2' bindtap='toOrderListTap'>
+            <view class='icon-wrap' data-isminejob='1' data-state='1' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/new/提醒.png'>
                     </image>
@@ -91,7 +88,7 @@
                 </view>
                 <text class='order-txt'>待完成</text>
             </view>
-            <view class='icon-wrap' data-index='3' bindtap='toOrderListTap'>
+            <view class='icon-wrap' data-isminejob='1' data-state='4' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
                     <image class='order-icon' src='/images/icon/new/标签.png'>
                     </image>

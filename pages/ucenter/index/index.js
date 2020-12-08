@@ -60,13 +60,14 @@ Page({
             });
         }
     },
-    toOrderListTap: function(event) {
+    toJobListTap: function(event) {
         let res = util.loginNow();
         if (res == true) {
-            let showType = event.currentTarget.dataset.index;
-            wx.setStorageSync('showType', showType);
+            let isminejob = event.currentTarget.dataset.isminejob;
+            let state = event.currentTarget.dataset.state;
+            console.info(event.currentTarget.dataset)
             wx.navigateTo({
-                url: '/pages/ucenter/order-list/index?showType=' + showType,
+                url: '/pages/ucenter/job-list/job-list?isMineJob=' + isminejob + '&state=' + state + '&doRefresh=1',
             });
         }
     },

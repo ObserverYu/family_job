@@ -21,7 +21,7 @@
         <view class='head-wrap' wx:else >
             <view class="head-l">
                 <view class='l'>
-                    <image class='avatar' src="/images/icon/icon-house.png"></image>
+                    <image class='avatar' src="/images/icon/new/主页.png"></image>
                 </view>
                 <view class='r'>
                     <view class='t'>

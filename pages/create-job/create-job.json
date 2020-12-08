@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "成员信息",
+    "navigationBarTitleText": "任务信息",
     "usingComponents": {
         "mp-form": "weui-miniprogram/form/form",
         "mp-toptips": "weui-miniprogram/toptips/toptips",

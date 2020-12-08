@@ -6,7 +6,29 @@ Page({
         name: '',
         mobile: '',
         status: 0,
+        inviteCode:''
     },
+    // 复制
+  copyTBL: function (e) {
+    var self = this;
+    wx.setClipboardData({
+      data: self.data.inviteCode,
+      success: function (res) {
+        // self.setData({copyTip:true}),
+        wx.showModal({
+          title: '提示',
+          content: '复制成功',
+          success: function (res) {
+            if (res.confirm) {
+              console.log('确定')
+            } else if (res.cancel) {
+              console.log('取消')
+            }
+          }
+        })
+      }
+    });
+  },
     mobilechange(e) {
         let mobile = e.detail.value;
         this.setData({
@@ -33,18 +55,11 @@ Page({
         }
     },
     getSettingsDetail() {
-        let that = this;
-        util.request(api.SettingsDetail).then(function(res) {
-            if (res.errno === 0) {
-                that.setData({
-                    name: res.data.name,
-                    mobile: res.data.mobile,
-                });
-                if (res.data.name == '' || res.data.mobile == ''){
-                    util.showErrorToast('请填写姓名和手机');
-                }
-            }
-        });
+        util.loginNow();
+        let userInfo = wx.getStorageSync('userInfo')
+        this.setData({
+            inviteCode:userInfo.inviteCode
+        })
     },
     onLoad: function(options) {
         this.getSettingsDetail();
