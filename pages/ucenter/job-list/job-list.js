@@ -23,10 +23,10 @@ Page({
         total:0 // 总条数
     },
     toOrderDetails: function(e) {
-        let orderId = e.currentTarget.dataset.id;
-        wx.setStorageSync('orderId', orderId)
+        let jobUserId = e.currentTarget.dataset.id;
+        let userRole = this.data.isMineJob == 0 ? 1:0;
         wx.navigateTo({
-            url: '/pages/ucenter/order-details/index',
+            url: '/pages/create-job/create-job?isCreate=0'+'&userRole='+userRole+'&id='+jobUserId
         })
     },
     payOrder: function(e) {
@@ -90,6 +90,7 @@ Page({
         });
     },
     onLoad: function(options) {
+        console.info("onload")
         this.setData({
             isMineJob:options.isMineJob,
             state:options.state,
@@ -97,6 +98,7 @@ Page({
         });
     },
     onShow: function() {
+        console.info("onshow")
         let doRefresh = this.data.doRefresh;
         if (doRefresh == 1) {
             this.setData({
@@ -104,7 +106,8 @@ Page({
                 allOrderList: [],
                 allPage: 1,
                 allCount: 0,
-                size: 8
+                size: 8,
+                doRefresh : 0
             });
             this.getJobList();
             this.jobCount();

@@ -13,6 +13,10 @@ module.exports = {
     ListAllJobTypeAndInfo: ApiRootUrl + 'job/listAllTypeAndInfo', // 所有家务类别和信息列表
     CreateJobToUser: ApiRootUrl + 'job/createJobToUser', // 创建
     ListMyJob: ApiRootUrl + 'job/listMyJob', // 我的家务列表
+    JobUserDetail: ApiRootUrl + 'job/getJobUserDetail', // 家务详情
+    AcceptJobUser: ApiRootUrl + 'job/acceptJob', // 接受任务
+    RefuseJobUser: ApiRootUrl + 'job/refuseJob', // 拒绝任务
+    FinishJobUser: ApiRootUrl + 'job/finishJob', // 完成任务
     // 家庭
     CreateFamily:ApiRootUrl + 'family/createFamily',
     GetFamily:ApiRootUrl + 'family/getFamily',

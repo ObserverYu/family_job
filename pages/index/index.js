@@ -38,7 +38,8 @@ Page({
             console.info(res.data);
             if(res.data != '' && res.data != null){
                 that.setData({hasFamily:1,family:res.data})
-                that.family = res.data;
+            }else{
+                that.setData({hasFamily:0,family:{}})
             }
         })
 
