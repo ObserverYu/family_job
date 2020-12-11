@@ -18,7 +18,7 @@
             </view>
         </view>
 
-        <view class='head-wrap' wx:else >
+        <view class='head-wrap' wx:else bindtap='goFamilyDetail'>
             <view class="head-l">
                 <view class='l'>
                     <image class='avatar' src="/images/icon/new/主页.png"></image>

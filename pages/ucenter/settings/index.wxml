@@ -1,9 +1,16 @@
 <view class="container">
     <view class='edit-container'>
+
         <view class="a-item">
-            <view class='copy'>
+            <view class="icon">
+                <image class="img" src="/images/icon/new/个人.png"></image>
+            </view>
+
+            <view class="input-wrap">
                 <input class='a-input' bindtap="copyTBL"  value="点击复制邀请码: {{inviteCode||''}}" ></input>
             </view>
         </view>
+
     </view>
+
 </view>

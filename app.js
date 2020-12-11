@@ -6,7 +6,7 @@ App({
     },
     onLaunch: function() {
         this.data.deviceInfo = wx.getSystemInfoSync();
-        console.log(this.data.deviceInfo);
+       // console.log(this.data.deviceInfo);
         // 展示本地存储能力
         var logs = wx.getStorageSync('logs') || []
         logs.unshift(Date.now())

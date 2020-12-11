@@ -1,0 +1,44 @@
+<view class="container">
+    <view class='edit-container'>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/主页.png"></image>
+            </view>
+            <view class="input-wrap" wx:if="{{familyId == 0}}">
+                <input cursor-spacing='100' class='a-input' bindinput="bindinputName" placeholder='请输入家庭名' value="{{family.name}}"></input>
+            </view>
+            <view class="input-wrap" wx:else>
+                <input cursor-spacing='100' class='a-input' bindinput="bindinputName"  value="家庭名:{{family.name}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item" wx:if="{{familyId != 0}}">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/摄像头.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="家长:  {{family.ownerName}}"></input>
+            </view>
+            <view class="icon">
+                <image class="avatar" src="{{family.ownerAvatar}}"></image>
+            </view>
+        </view>
+
+        <view class="a-item" wx:if="{{familyId != 0}}">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/时间.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' disabled="true" class='a-input' value="创建时间:  {{family.createTime}}"></input>
+            </view>
+        </view>
+
+    </view>
+
+    <view class="cart-add-box">
+        <block wx:if="{{familyId == 0}}" bindtap="createFamily">
+            <view class="cart-empty" bindtap="createFamily">创建</view>
+        </block>
+    </view>
+</view>

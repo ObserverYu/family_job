@@ -1,6 +1,5 @@
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
-const pay = require('../../services/pay.js');
 const app = getApp()
 Page({
     data: {
@@ -11,14 +10,15 @@ Page({
     goUserDetail: function(e) {
         let id = e.currentTarget.dataset.userid;
         let select = 0;
-        let canDeleted = 0;
+        let canDelete = 0;
         if(this.data.type == 0){
             select = 1;
         }else if(this.data.type == 1){
-            canDeleted = 1;
+            canDelete = 1;
         }
+        console.info("list:"+select+"    "+canDelete)
         wx.navigateTo({
-            url: '/pages/user-detail/user-detail?select='+select+'&canDeleted='+canDeleted+'&id=' + id,
+            url: '/pages/user-detail/user-detail?select='+select+'&canDelete='+canDelete+'&id=' + id,
         })
     },
 
@@ -50,14 +50,10 @@ Page({
     onShow: function() {
         this.getUsers();
     },
-    addAddress: function() {
-        wx.navigateTo({
-            url: '/pages/ucenter/address-detail/index?id=' + 0,
-        })
-    },
+
     onPullDownRefresh: function () {
         wx.showNavigationBarLoading()
-        this.getAddresses();
+        this.getUsers();
         wx.hideNavigationBarLoading() //完成停止加载
         wx.stopPullDownRefresh() //停止下拉刷新
     }

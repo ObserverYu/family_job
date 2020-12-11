@@ -1,9 +1,6 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 var user = require('../../../services/user.js');
-
-// TODO 订单显示数量在图标上
-
 const app = getApp()
 
 Page({
@@ -36,10 +33,11 @@ Page({
 
     onPullDownRefresh: function() {
         wx.showNavigationBarLoading()
-        this.getOrderInfo();
+        this.getJobInfo();
         wx.hideNavigationBarLoading() //完成停止加载
         wx.stopPullDownRefresh() //停止下拉刷新
     },
+
     getJobInfo: function(e) {
         let that = this;
         util.request(api.JobCountInfo).then(function(res) {
@@ -60,30 +58,18 @@ Page({
             });
         }
     },
+
     toJobListTap: function(event) {
         let res = util.loginNow();
         if (res == true) {
             let isminejob = event.currentTarget.dataset.isminejob;
             let state = event.currentTarget.dataset.state;
-            console.info(event.currentTarget.dataset)
             wx.navigateTo({
-                url: '/pages/ucenter/job-list/job-list?isMineJob=' + isminejob + '&state=' + state + '&doRefresh=1',
+                url: '/pages/job-list/job-list?isMineJob=' + isminejob + '&state=' + state + '&doRefresh=1',
             });
         }
     },
-    toAddressList: function(e) {
-        let res = util.loginNow();
-        if (res == true) {
-            wx.navigateTo({
-                url: '/pages/ucenter/address/index?type=0',
-            });
-        }
-    },
-    toAbout: function () {
-        wx.navigateTo({
-            url: '/pages/ucenter/about/index',
-        });
-    },
+
     toUserList: function(e) {
         let res = util.loginNow();
         if (res == true) {
@@ -92,6 +78,7 @@ Page({
             });
         }
     },
+
     goAuth: function(e) {
         wx.navigateTo({
             url: '/pages/app-auth/index',

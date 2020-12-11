@@ -5,16 +5,15 @@ Page({
     data: {
         userInfo: {},
         userId: 0,
-        type:0,
         canDelete:0,
         edit:0,
         select:0
     },
     
     onLoad: function(options) {
+        console.info("detail:"+options.select +"   "+options.canDelete)
         this.setData({
-            type: options.type,
-            canDeleted: options.canDeleted,
+            canDelete: options.canDelete,
             select:options.select
         });
         // 页面初始化 options为页面跳转所带来的参数
@@ -40,22 +39,22 @@ Page({
         // 页面关闭
 
     },
-    deleteAddress: function() {
-        let id = this.data.addressId;
+
+    deleteUser: function() {
+        let id = this.data.userId;
         wx.showModal({
             title: '提示',
-            content: '您确定要删除么？',
+            content: '您确定要将该成员移出家庭么？',
             success: function(res) {
                 if (res.confirm) {
-                    util.request(api.DeleteAddress, {
+                    util.request(api.DeleteMember, {
                         id: id
                     }, 'POST').then(function(res) {
-                        if (res.errno === 0) {
-                            wx.removeStorageSync('addressId');
-                            util.showErrorToast('删除成功');
+                        if (res.code === 200) {
+                            util.showErrorToast('移除成功');
                             wx.navigateBack();
                         } else {
-                            util.showErrorToast(res.errmsg);
+                            util.showErrorToast(res.message);
                         }
                     });
                 }

@@ -19,6 +19,9 @@
                     </view>
                 </view>
             </view>
+            <view class="head-r">
+                <view class="arrow"></view>
+            </view>
         </view>
     </view>
     <view class="order-container">

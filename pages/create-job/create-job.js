@@ -47,7 +47,6 @@ Page({
     onLoad: function(options) {
         util.loginNow();
         let userInfo = wx.getStorageSync('userInfo');
-
         let isCreate = options.isCreate;
         let userRole = options.userRole;
         this.setData({
@@ -127,7 +126,7 @@ Page({
             finishTime:res.data.finishTime,
             stateStr:res.data.stateStr,
         });
-        console.info(this.data)
+
     },
 
     initMuitlSelect:function(res){
@@ -154,7 +153,6 @@ Page({
     },
 
     bindMultiPickerChange: function (e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
         this.setData({
            multiIndex: e.detail.value,
            chosenJobName: this.data.multiArray[1][e.detail.value[1]],
@@ -163,7 +161,6 @@ Page({
     },
 
     bindMultiPickerColumnChange: function (e) {
-        console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
         // 初始化数据
         var data = {
             objectMultiShow: this.data.objectMultiShow,
@@ -186,7 +183,6 @@ Page({
     },
     
     bindDateChange: function(e) {
-        console.log('picker发送选择改变，携带值为', e.detail.value)
         this.setData({
           date: e.detail.value
         })
@@ -286,7 +282,7 @@ Page({
                 })
                 setTimeout(()=>{
                     wx.reLaunch({
-                        url: '/pages/ucenter/job-list/job-list?isMineJob=1&state=1&doRefresh=1',
+                        url: '/pages/job-list/job-list?isMineJob=1&state=1&doRefresh=1',
                     });
                 },500)
             }else{
@@ -318,7 +314,7 @@ Page({
                 })
                 setTimeout(()=>{
                     wx.reLaunch({
-                        url: '/pages/ucenter/job-list/job-list?isMineJob=1&state=3&doRefresh=1',
+                        url: '/pages/job-list/job-list?isMineJob=1&state=3&doRefresh=1',
                     });
                 },500)
             }else{
@@ -350,7 +346,7 @@ Page({
                 })
                 setTimeout(()=>{
                     wx.reLaunch({
-                        url: '/pages/ucenter/job-list/job-list?isMineJob=0&state=4&doRefresh=1',
+                        url: '/pages/job-list/job-list?isMineJob=0&state=4&doRefresh=1',
                     });
                 },500)
             }else{

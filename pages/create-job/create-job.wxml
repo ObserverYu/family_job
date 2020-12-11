@@ -105,28 +105,6 @@
 		</view>
 	</view>
     
-    <!-- <view class='btn-wrap'  wx:if="{{isCreate == 1}}" bindtap="saveJobUser">
-        <view class="btn active">提交</view>
-    </view>
-
-    <view class='btn-wrap'  wx:if="{{isCreate == 0 && userRole == 0 && state == 1}}" bindtap="saveAddress">
-        <view class="btn active">使用步数抵扣</view>
-    </view>
-
-    <view class='btn-wrap'  wx:if="{{isCreate == 0 && userRole == 1 && state == 1}}" bindtap="saveAddress">
-        <view class="btn active">确认完成</view>
-    </view>
-
-    <view class="btn-box">
-        <view class='btn-wrap'  wx:if="{{isCreate == 0 && userRole == 0 && state == 0}}" bindtap="saveAddress">
-            <view class="btn active">接受</view>
-        </view>
-    </view>
-
-    <view class='delete-wrap'  wx:if="{{isCreate == 0 && userRole == 0 && state == 0}}" bindtap="deleteUser">
-        <view class="btn active">拒绝</view>
-    </view> -->
-
     <view class="cart-add-box">
         <block wx:if="{{isCreate == 1}}" bindtap="saveJobUser">
             <view class="cart-empty" bindtap="saveJobUser">提交</view>

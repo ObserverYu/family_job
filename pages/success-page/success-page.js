@@ -1,6 +1,5 @@
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
-const pay = require('../../services/pay.js');
 
 var app = getApp();
 Page({

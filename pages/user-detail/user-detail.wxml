@@ -48,7 +48,7 @@
     <view class='btn-wrap'  wx:if="{{edit == 1}}" bindtap="saveUser">
         <view class="btn active">保存</view>
     </view>
-    <view class='delete-wrap'  wx:if="{{candDeleted == 1}}" bindtap="deleteUser">
+    <view class='delete-wrap'  wx:if="{{canDelete == 1}}" bindtap="deleteUser">
         <view class="btn active">移出家庭</view>
     </view>
    

@@ -38,7 +38,6 @@ function formatTimeNum(number, format) {
 }
 
 function testMobile(num) {
-    console.log
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1})|(16[0-9]{1})|(19[0-9]{1}))+\d{8})$/;
     if (num.length == 0) {
         wx.showToast({
@@ -77,7 +76,6 @@ function request(url, data = {}, method = "GET") {
                 'auth-token': wx.getStorageSync('token')
             },
             success: function(res) {
-                console.info(res);
                 if(res.statusCode == 200){
                      if(res.data.code == 401){
                         //需要登录后才可以操作

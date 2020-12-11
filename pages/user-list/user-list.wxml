@@ -22,7 +22,4 @@
         <image src="/images/icon/position-deny.png" class="img"></image>
         <view class="text">没有成员信息</view>
     </view>
-    <view class="btn-wrap" bindtap="addAddress">
-        <view wx:if="{{type == 1}}"  class="btn">邀请成员</view>
-    </view>
 </view>

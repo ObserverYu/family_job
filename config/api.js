@@ -1,5 +1,5 @@
 const ApiRootUrl = 'http://localhost:9410/';
-//const ApiRootUrl = 'https://www.hiolabs.com/api/';
+//const ApiRootUrl = 'https://family.lovejiangbaby.cn';
 
 module.exports = {
     // 个人
@@ -24,4 +24,5 @@ module.exports = {
     InviteUser:ApiRootUrl + 'invite/inviteUser', //邀请用户
     AcceptInvite:ApiRootUrl + 'invite/acceptInvite', //接受邀请
     RefuseInvite:ApiRootUrl + 'invite/refuseInvite', //拒绝邀请
+    DeleteMember:ApiRootUrl + 'family/deleteMember', //移出家庭
 };

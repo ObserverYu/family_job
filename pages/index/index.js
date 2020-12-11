@@ -19,7 +19,12 @@ Page({
     onLoad: function(options) {
         let res = util.loginNow();
     },
+
     onShow: function() {
+        this.refreshHomePage();
+    },
+
+    refreshHomePage:function(){
         let userInfo = wx.getStorageSync('userInfo');
         if(userInfo == ''){
             this.setData({
@@ -46,14 +51,13 @@ Page({
                 }
             })
         }
-        wx.removeStorageSync('categoryId');
     },
 
-    goProfile: function (e) {
+    goFamilyDetail:function(e){
         let res = util.loginNow();
         if (res == true) {
             wx.navigateTo({
-                url: '/pages/ucenter/settings/index',
+                url: '/pages/family-detail/family-detail?id='+this.data.family.id,
             });
         }
     },
@@ -61,7 +65,7 @@ Page({
     goInviteRecordPage:function(e){
         let that = this;
         util.request(api.GetMyInviteRecord).then((res)=>{
-            console.info(res);
+            //console.info(res);
             if(res.code == 200){
                 if(res.data != null && res.data != ''){
                     that.setData({
@@ -95,7 +99,6 @@ Page({
     getInviteRecord: function (e) {
         let that = this;
         util.request(api.GetMyInviteRecord).then((res)=>{
-            console.info(res);
             if(res.code == 200){
                 if(res.data != null && res.data != ''){
                     that.setData({
@@ -107,17 +110,6 @@ Page({
         });
     },
 
-    toOrderListTap: function(event) {
-        let res = util.loginNow();
-        if (res == true) {
-            let showType = event.currentTarget.dataset.index;
-            wx.setStorageSync('showType', showType);
-            wx.navigateTo({
-                url: '/pages/ucenter/order-list/index?showType=' + showType,
-            });
-        }
-    },
-
     toInvitePage: function(e) {
         let res = util.loginNow();
         if (res == true) {
@@ -126,41 +118,32 @@ Page({
             });
         }
     },
-    toAbout: function () {
-        wx.navigateTo({
-            url: '/pages/ucenter/about/index',
-        });
-    },
-    toFootprint: function(e) {
-        let res = util.loginNow();
-        if (res == true) {
-            wx.navigateTo({
-                url: '/pages/ucenter/footprint/index',
-            });
-        }
-    },
+
     goAuth: function(e) {
         wx.navigateTo({
             url: '/pages/app-auth/index',
         });
     },
+
     goCreateFamily: function(e) {
         wx.navigateTo({
-            url: '/pages/ucenter/family-detail/index',
+            url: '/pages/family-detail/family-detail',
         });
     },
+
     onPullDownRefresh: function() {
         wx.showNavigationBarLoading()
-        this.getOrderInfo();
+        this.refreshHomePage();
         wx.hideNavigationBarLoading() //完成停止加载
         wx.stopPullDownRefresh() //停止下拉刷新
     },
 
     toUserListPage: function(e) {
         let res = util.loginNow();
-        if (res == true) {
+        if (res) {
+            let type = this.data.userInfo.familyOwner == 1 ? 1:2;
             wx.navigateTo({
-                url: '/pages/user-list/user-list?type=2',
+                url: '/pages/user-list/user-list?type='+type,
             });
         }
     },

@@ -1,13 +1,18 @@
 {
   "pages": [
       "pages/ucenter/index/index",
-      "pages/index/index",
-      "pages/user-detail/user-detail",
       "pages/app-auth/index",
       "pages/create-job/create-job",
+      "pages/index/index",
+      "pages/invite/invite",
+      "pages/invite-record/invite-record",
+      "pages/logs/logs",
+      "pages/success-page/success-page",
+      "pages/family-detail/family-detail",
+      "pages/job-list/job-list",
+      "pages/ucenter/settings/settings",
       "pages/user-list/user-list",
-      "pages/ucenter/family-detail/index",
-      "pages/success-page/success-page"
+      "pages/user-detail/user-detail"
 
   ],
   "style": "v2",

@@ -41,7 +41,7 @@ function loginByWeixin() {
  */
 function getFamily() {
     return util.request(api.GetFamily, {});
-}
+}``
 
 /**
  * 判断用户是否登录
