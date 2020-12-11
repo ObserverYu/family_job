@@ -17,7 +17,7 @@
     <view class='edit-container'>
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/receiver.png"></image>
+                <image class="img" src="/images/icon/new/个人.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input' disabled='true' value="角色: {{userInfo.userType}}"></input>
@@ -25,7 +25,7 @@
         </view>
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/pay-success.png"></image>
+                <image class="img" src="/images/icon/new/摄像头.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input' disabled='true' value="是否家长: {{userInfo.isOwnerStr}}"></input>
@@ -34,7 +34,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/icon-time.png"></image>
+                <image class="img" src="/images/icon/new/时间.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input' disabled='true' value="加入时间: {{userInfo.lastJoinTime}}"></input>

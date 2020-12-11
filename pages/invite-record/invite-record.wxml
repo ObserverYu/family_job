@@ -1,26 +1,24 @@
 <view class="container">
-    <view class='status-wrap' bindtap='clearTimer'>
-		<view class='status-text'>
-            <image wx:if="{{state == 0}}"  class='icon to-pay' src="/images/icon/new/灵感.png"></image>
-            <image wx:elif="{{state == 1}}"  class='icon to-pay' src="/images/icon/new/提醒.png"></image>
-            <image wx:elif="{{state == 2}}"  class='icon to-pay' src="/images/icon/new/时间.png"></image>
-            <image wx:elif="{{state == 3}}"  class='icon to-pay' src="/images/icon/pay-error.png"></image>
-            <image wx:elif="{{state == 4}}"  class='icon to-pay' src="/images/icon/new/标签.png"></image>
-			<view class='text'>{{stateStr}}</view>
-		</view>
-	</view>
     
     <view class='edit-container'>
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/主页.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="家庭名:  {{inviteRecord.familyName}}"></input>
+            </view>
+        </view>
 
         <view class="a-item">
             <view class="icon">
                 <image class="img" src="/images/icon/new/摄像头.png"></image>
             </view>
             <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input'  disabled="true" value="创建人:  {{creatorNickName}}"></input>
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="家长:  {{inviteRecord.familyCreatorName}}"></input>
             </view>
             <view class="icon">
-                <image class="avatar" src="{{creatorAvatar}}"></image>
+                <image class="avatar" src="{{inviteRecord.familyCreatorAvatar}}"></image>
             </view>
         </view>
 
@@ -29,123 +27,32 @@
                 <image class="img" src="/images/icon/new/个人.png"></image>
             </view>
             <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input'  disabled="true" value="接收人:  {{userNickName}}"></input>
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="邀请人:  {{inviteRecord.inviterName}}"></input>
             </view>
             <view class="icon">
-                <image class="avatar" src="{{userAvatar}}"></image>
+                <image class="avatar" src="{{inviteRecord.inviterAvatar}}"></image>
             </view>
         </view>
+
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/提醒.png"></image>
+                <image class="img" src="/images/icon/new/时间.png"></image>
             </view>
             <view class="input-wrap">
-                <picker mode="multiSelector" disabled="{{isCreate == 1 ? false:true}}" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-                        <input cursor-spacing='100' class='a-input' placeholder="点击选择任务" bindinput="bindinputName" disabled="true" value="{{chosenJobName}}"></input>
-                </picker>
+                <input cursor-spacing='100' disabled="true" class='a-input' value="邀请时间:  {{inviteRecord.createTime}}"></input>
             </view>
         </view>
 
-        <view class="a-item">
-            <view class="icon">
-                <image class="img" src="/images/icon/new/日历.png"></image>
-            </view>
-            <view class="input-wrap">
-                <picker mode="date" disabled="{{isCreate == 1 ? false:true}}" value="{{date}}" start="{{nowDate}}" end="2099-01-01" bindchange="bindDateChange">
-                    <input cursor-spacing='100' disabled="{{isCreate == 1 ? false:true}}" class='a-input' placeholder="点击选择过期时间" value="{{date}}"></input>
-                </picker>
-            </view>
-        </view>
-
-        <view class="a-item" >
-            <view class="icon">
-                <image class="img" src="/images/icon/new/信息.png"></image>
-            </view>
-            <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input' disabled="{{isCreate == 1 ? false:true}}" bindinput="bindinputRemark"  placeholder="{{isCreate == 1 ? '输入备注(可选)':'无'}}"  value="{{remark}}"></input>
-            </view>
-        </view>
-
-        <view class="a-item">
-            <view class="default-wrap">
-            <view class="text">可以使用微信步数抵扣</view>
-                <switch class="switch" disabled="{{isCreate == 1 ? false:true}}" checked="{{canStep == 1 ? true:false}}" bindchange="switchChange"></switch>
-            </view>
-        </view>
-
-        <view class="a-item" wx:if="{{canStep == 1}}">
-            <view class="icon">
-                <image class="img" src="/images/icon/new/步行.png"></image>
-            </view>
-            <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input' type='number' bindinput="bindinputCostStep" disabled="{{isCreate == 1 ? false:true}}" placeholder="输入步数,大于10000"  value="{{costStep}}"></input>
-            </view>
-        </view>
     </view>
-
-	<view class="order-info" wx:if="{{isCreate == 0}}">
-		<view class='row-box-wrap'>
-			<view class="row-box2">
-				<view class="row-label2">创建时间：</view>
-				<view class="right-text2">{{createTime}}</view>
-			</view>
-			<view wx:if="{{checkTime}}" class="row-box2">
-				<view class="row-label2">审核时间：</view>
-				<view class="right-text2">{{checkTime}}</view>
-			</view>
-			<view wx:if="{{finishTime}}" class="row-box2">
-				<view class="row-label2">完成时间:</view>
-				<view class="right-text2">{{finishTime}}</view>
-            </view>
-            <view  class="row-box2">
-				<view class="row-label2"></view>
-				<view class="right-text2"></view>
-			</view>
-		</view>
-	</view>
-    
-    <!-- <view class='btn-wrap'  wx:if="{{isCreate == 1}}" bindtap="saveJobUser">
-        <view class="btn active">提交</view>
-    </view>
-
-    <view class='btn-wrap'  wx:if="{{isCreate == 0 && userRole == 0 && state == 1}}" bindtap="saveAddress">
-        <view class="btn active">使用步数抵扣</view>
-    </view>
-
-    <view class='btn-wrap'  wx:if="{{isCreate == 0 && userRole == 1 && state == 1}}" bindtap="saveAddress">
-        <view class="btn active">确认完成</view>
-    </view>
-
-    <view class="btn-box">
-        <view class='btn-wrap'  wx:if="{{isCreate == 0 && userRole == 0 && state == 0}}" bindtap="saveAddress">
-            <view class="btn active">接受</view>
-        </view>
-    </view>
-
-    <view class='delete-wrap'  wx:if="{{isCreate == 0 && userRole == 0 && state == 0}}" bindtap="deleteUser">
-        <view class="btn active">拒绝</view>
-    </view> -->
 
     <view class="cart-add-box">
-        <block wx:if="{{isCreate == 1}}" bindtap="saveJobUser">
-            <view class="cart-empty" bindtap="saveJobUser">提交</view>
-        </block>
-
-        <block wx:if="{{isCreate == 0 && userRole == 0 && state == 1 && canStep == 1}}" bindtap="costStep">
-            <view class="cart-empty" bindtap="costStep">使用步数抵扣</view>
-        </block>
-
-        <block wx:if="{{isCreate == 0 && userRole == 1 && state == 1}}" bindtap="finish">
-            <view class="cart-empty" bindtap="finish">确认完成</view>
-        </block>
-
-        <block wx:if="{{isCreate == 0 && userRole == 0 && state == 0}}" bindtap="refuse">
+        <block wx:if="{{inviteRecord.state == 0}}" bindtap="refuse">
             <view class="refuse" bindtap="refuse">拒绝</view>
         </block>
 
-        <block wx:if="{{isCreate == 0 && userRole == 0 && state == 0}}" bindtap="accept">
-            <view class="cart-empty" bindtap="accept">接受</view>
+        <block wx:if="{{inviteRecord.state == 0}}" bindtap="accept">
+            <view class="cart-empty" bindtap="accept">加入</view>
         </block>
     </view>
 </view>

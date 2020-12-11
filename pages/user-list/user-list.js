@@ -2,28 +2,38 @@ var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
 const pay = require('../../services/pay.js');
 const app = getApp()
-// 触底上拉刷新 TODO 这里要将page传给服务器，作者没写
 Page({
     data: {
         users: [],
-        type:0
+        type:0    // 0-任务选择页面进入列表  1-家长进入  2-成员进入
     },
+
     goUserDetail: function(e) {
         let id = e.currentTarget.dataset.userid;
+        let select = 0;
+        let canDeleted = 0;
+        if(this.data.type == 0){
+            select = 1;
+        }else if(this.data.type == 1){
+            canDeleted = 1;
+        }
         wx.navigateTo({
-            url: '/pages/user-detail/user-detail?select=1&canDeleted=0&id=' + id,
+            url: '/pages/user-detail/user-detail?select='+select+'&canDeleted='+canDeleted+'&id=' + id,
         })
     },
+
     getUsers() {
-        util.loginNow();
-        let that = this;
-        util.request(api.GetUsers).then(function(res) {
-            if (res.code === 200) {
-                that.setData({
-                    users: res.data.userList
-                })
-            }
-        });
+        let res = util.loginNow();
+        if(res){
+            let that = this;
+            util.request(api.GetUsers).then(function(res) {
+                if (res.code === 200) {
+                    that.setData({
+                        users: res.data.userList
+                    })
+                }
+            });
+        }
     },
     selectUser:function(e) {
         let userId = e.currentTarget.dataset.userId

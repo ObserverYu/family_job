@@ -1,6 +1,6 @@
 <view class="container">
     <view class="userinfo">
-        <view class='head-wrap' wx:if="{{hasUserInfo == 0}}" bindtap='goAuth'>
+        <view class='head-wrap' wx:if="{{!hasUserInfo}}" bindtap='goAuth'>
             <view class="no-login-avatar">
                 <view class='no-avatar'>
                     <image class='avatar' src="/images/icon/default_avatar_big.png"></image>
@@ -9,7 +9,7 @@
             </view>
         </view>
 
-        <view class='head-wrap' wx:elif="{{hasFamily == 0}}" bindtap='goCreateFamily'>
+        <view class='head-wrap' wx:elif="{{!hasFamily}}" bindtap='goCreateFamily'>
             <view class="no-login-avatar">
                 <view class='no-avatar'>
                     <image class='avatar' src="/images/icon/icon-defalut-house.png"></image>
@@ -35,11 +35,11 @@
         </view>
     </view>
 
-    <view class="li-wrap" wx:if="{{hasFamily == 1}}">
-        <view class="list" bindtap="toAddressList">
+    <view class="li-wrap" wx:if="{{hasFamily}}">
+        <view class="list" bindtap="toInvitePage">
             <view class="list-l">
                 <view class="icon">
-                    <image class="img" src="/images/icon/icon-address-r.png"></image>
+                    <image class="img" src="/images/icon/icon-service-r.png"></image>
                 </view>
                 <view class="text">邀请</view>
             </view>
@@ -47,30 +47,31 @@
         </view>
     </view>
 
-    <view class="li-wrap" wx:if="{{hasUserInfo == 1 && hasFamily == 0}}">
-        <view class="list" bindtap="toAddressList">
+    <view class="li-wrap" wx:if="{{hasUserInfo && !hasFamily}}">
+        <view class="list" bindtap="goInviteRecordPage">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-address-r.png"></image>
                 </view>
                 <view class="text">收到的邀请</view>
             </view>
+            <view  class='red-point' wx:if="{{hasInvite}}">NEW</view>
             <view class="arrow"></view>
         </view>
     </view>
 
-    <view class="li-wrap" wx:if="{{hasFamily == 1}}">
-        <view class="list" bindtap="toFootprint">
+    <view class="li-wrap" wx:if="{{hasFamily}}">
+        <view class="list" bindtap="toUserListPage">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-member.png"></image>
                 </view>
-                <view class="text">成员管理</view>
+                <view class="text">成员</view>
             </view>
             <view class="arrow"></view>
         </view>
 
-        <view class="list" bindtap="toAbout">
+        <view class="list" bindtap="toStatisticsPage">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-tongji.png"></image>
@@ -80,7 +81,7 @@
             <view class="arrow"></view>
         </view>
 
-        <view class="list" bindtap="toAbout">
+        <view class="list" bindtap="toDailyJob">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/new/列表.png"></image>
@@ -91,7 +92,7 @@
         </view>
     </view>
 
-    <view class="invite" wx:if="{{hasUserInfo == 1}}">
+    <view class="invite" wx:if="{{hasUserInfo}}">
         <view class="c-wrap">
             <view class="text">我的邀请码</view>
             <view class="line"></view>

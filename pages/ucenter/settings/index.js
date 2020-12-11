@@ -55,11 +55,13 @@ Page({
         }
     },
     getSettingsDetail() {
-        util.loginNow();
-        let userInfo = wx.getStorageSync('userInfo')
-        this.setData({
-            inviteCode:userInfo.inviteCode
-        })
+        let res = util.loginNow();
+        if(res){
+            let userInfo = wx.getStorageSync('userInfo')
+            this.setData({
+                inviteCode:userInfo.inviteCode
+            })
+        }
     },
     onLoad: function(options) {
         this.getSettingsDetail();

@@ -224,9 +224,9 @@ page {
 }
 
 .red-point {
-    position: absolute;
-    top: -10rpx;
-    right: 56rpx;
+    /* position: absolute;
+    top: -10rpx; 
+    right: 56rpx;*/
     border-radius: 20rpx;
     background: #e71a2a;
     font-size: 20rpx;

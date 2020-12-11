@@ -17,23 +17,28 @@ Page({
             status: options.status
         })
     },
-    toOrderListPage: function(event) {
+    toIndexPage: function(event) {
         wx.switchTab({
             url: '/pages/ucenter/index/index',
         });
     },
+
+    toMyHomePage: function(event) {
+        wx.switchTab({
+            url: '/pages/index/index',
+        });
+    },
+
     toUserList: function() {
         wx.reLaunch({
             url: '/pages/user-list/user-list?type=0'
         });
     },
-    payOrder() {
-        pay.payOrder(parseInt(this.data.orderId)).then(res => {
-            this.setData({
-                status: true
-            });
-        }).catch(res => {
-            util.showErrorToast(res.errmsg);
+
+    toInvitePage: function() {
+        wx.reLaunch({
+            url: '/pages/invite/invite'
         });
-    }
+    },
+
 })

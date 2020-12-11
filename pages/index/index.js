@@ -8,43 +8,47 @@ Page({
     data: {
         userInfo: {},
         family:{},
-        hasFamily: 0,
+        hasFamily: false,
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         status: {},
+        inviteRecord: {},
+        hasInvite:false
     },
 
     onLoad: function(options) {
+        let res = util.loginNow();
     },
     onShow: function() {
         let userInfo = wx.getStorageSync('userInfo');
         if(userInfo == ''){
             this.setData({
-                hasUserInfo: 0,
+                hasUserInfo: false,
             });
         }
         else{
             this.setData({
-                hasUserInfo: 1,
+                hasUserInfo: true,
             });
         }
         this.setData({
             userInfo: userInfo,
         });
 
-        let that =this;
-        user.getFamily().then(res=>{
-            console.info(res);
-            console.info(res.data);
-            if(res.data != '' && res.data != null){
-                that.setData({hasFamily:1,family:res.data})
-            }else{
-                that.setData({hasFamily:0,family:{}})
-            }
-        })
-
+        if(this.data.hasUserInfo){
+            let that =this;
+            user.getFamily().then(res=>{
+                if(res.data != '' && res.data != null){
+                    that.setData({hasFamily:true,family:res.data})
+                }else{
+                    that.setData({hasFamily:false,family:{}})
+                    that.getInviteRecord();
+                }
+            })
+        }
         wx.removeStorageSync('categoryId');
     },
+
     goProfile: function (e) {
         let res = util.loginNow();
         if (res == true) {
@@ -53,6 +57,56 @@ Page({
             });
         }
     },
+
+    goInviteRecordPage:function(e){
+        let that = this;
+        util.request(api.GetMyInviteRecord).then((res)=>{
+            console.info(res);
+            if(res.code == 200){
+                if(res.data != null && res.data != ''){
+                    that.setData({
+                        inviteRecord:res.data
+                        ,hasInvite:true
+                    })
+                    wx.navigateTo({
+                        url: '/pages/invite-record/invite-record'
+                        ,success: function(res) {
+                            // 通过eventChannel向被打开页面传送数据
+                            res.eventChannel.emit('inviteRecordEven', that.data.inviteRecord)
+                        }
+                    })
+                }else{
+                    wx.showToast({
+                        title: "没有新的邀请",
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            }else{
+                wx.showToast({
+                    title: res.message,
+                    icon: 'success',
+                    duration: 2000
+                })
+            }
+        });
+    },
+
+    getInviteRecord: function (e) {
+        let that = this;
+        util.request(api.GetMyInviteRecord).then((res)=>{
+            console.info(res);
+            if(res.code == 200){
+                if(res.data != null && res.data != ''){
+                    that.setData({
+                        inviteRecord:res.data
+                        ,hasInvite:true
+                    })
+                }
+            }
+        });
+    },
+
     toOrderListTap: function(event) {
         let res = util.loginNow();
         if (res == true) {
@@ -63,11 +117,12 @@ Page({
             });
         }
     },
-    toAddressList: function(e) {
+
+    toInvitePage: function(e) {
         let res = util.loginNow();
         if (res == true) {
             wx.navigateTo({
-                url: '/pages/ucenter/address/index?type=0',
+                url: '/pages/invite/invite',
             });
         }
     },
@@ -100,15 +155,30 @@ Page({
         wx.hideNavigationBarLoading() //完成停止加载
         wx.stopPullDownRefresh() //停止下拉刷新
     },
-    getOrderInfo: function(e) {
-        let that = this;
-        util.request(api.OrderCountInfo).then(function(res) {
-            if (res.errno === 0) {
-                let status = res.data;
-                that.setData({
-                    status: status
-                });
-            }
-        });
+
+    toUserListPage: function(e) {
+        let res = util.loginNow();
+        if (res == true) {
+            wx.navigateTo({
+                url: '/pages/user-list/user-list?type=2',
+            });
+        }
     },
+
+    toStatisticsPage: function(e) {
+        wx.showToast({
+            title: "开发中",
+            icon: 'none',
+            duration: 1000
+        })
+    },
+
+    toDailyJob: function(e) {
+        wx.showToast({
+            title: "开发中",
+            icon: 'none',
+            duration: 1000
+        })
+    },
+    
 })

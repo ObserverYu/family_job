@@ -64,23 +64,25 @@ Page({
     },
 
     getUserDetail() {
-        util.loginNow();
-        let that = this;
-        util.request(api.GetUserDetail, {
-            userId: that.data.userId
-        }).then(function(res) {
-            if (res.code === 200) {
-                that.setData({
-                    userInfo: res.data
-                });
-            }else{
-                wx.showToast({
-                    title: res.message,
-                    icon: 'none',
-                    duration: 2000
-                })
-            }
-        });
+        let res = util.loginNow();
+        if(res){
+            let that = this;
+            util.request(api.GetUserDetail, {
+                userId: that.data.userId
+            }).then(function(res) {
+                if (res.code === 200) {
+                    that.setData({
+                        userInfo: res.data
+                    });
+                }else{
+                    wx.showToast({
+                        title: res.message,
+                        icon: 'none',
+                        duration: 2000
+                    })
+                }
+            });
+        }
     },
 
     goCreateJobPage: function() {

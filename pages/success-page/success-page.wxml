@@ -10,19 +10,30 @@
         <view class="to-order-btn" bindtap="toUserList">
             继续发布
         </view>
-        <view class='btn-go-order' bindtap="toOrderListPage">返回我的页面</view>
+        <view class='btn-go-order' bindtap="toIndexPage">返回我的页面</view>
     </view>
+
+    <view wx:elif="{{status == 2}}" class="result-wrap">
+        <view class='image-wrap'>
+            <image src="/images/icon/pay-success.png" class="success-img"></image>
+        </view>
+        <view class='text-wrap'>
+            <view class="success-text">邀请成功</view>
+            <view class="success-text">等待接受</view>
+        </view>
+        <view class="to-order-btn" bindtap="toInvitePage">
+            继续邀请
+        </view>
+        <view class='btn-go-order' bindtap="toMyHomePage">返回我的家</view>
+    </view>
+
     <view wx:else class="result-wrap">
         <view class='image-wrap'>
             <image src="/images/icon/pay-error.png" class="success-img"></image>
         </view>
         <view class='text-wrap'>
             <view class="text">提交失败</view>
-            <button class='contact-wrap' session-from='{"nickName":"{{userInfo.nickname}}","avatarUrl":"{{userInfo.avatar}}"}'  open-type="contact" session-from="weapp">
-                <image src="/images/icon/contact.png" class='contact-icon'></image>
-                <view class='contact'>联系客服</view>
-            </button>
         </view>
-        <view class='btn-go-order' bindtap="toOrderListPage">返回我的页面</view>
+        <view class='btn-go-order' bindtap="toIndexPage">返回我的页面</view>
     </view>
 </view>
