@@ -76,6 +76,7 @@ function request(url, data = {}, method = "GET") {
                 'auth-token': wx.getStorageSync('token')
             },
             success: function(res) {
+                //console.info(res)
                 if(res.statusCode == 200){
                      if(res.data.code == 401){
                         //需要登录后才可以操作

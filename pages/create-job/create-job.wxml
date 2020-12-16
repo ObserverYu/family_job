@@ -1,11 +1,11 @@
 <view class="container">
-    <view class='status-wrap' bindtap='clearTimer'>
+    <view class='status-wrap' wx:if="{{isCreate != 1}}" bindtap='clearTimer'>
 		<view class='status-text'>
-            <image wx:if="{{state == 0}}"  class='icon to-pay' src="/images/icon/new/灵感.png"></image>
-            <image wx:elif="{{state == 1}}"  class='icon to-pay' src="/images/icon/new/提醒.png"></image>
-            <image wx:elif="{{state == 2}}"  class='icon to-pay' src="/images/icon/new/时间.png"></image>
+            <image wx:if="{{state == 0}}"  class='icon to-pay' src="/images/icon/new/linggan.png"></image>
+            <image wx:elif="{{state == 1}}"  class='icon to-pay' src="/images/icon/new/tixing.png"></image>
+            <image wx:elif="{{state == 2}}"  class='icon to-pay' src="/images/icon/new/shijian.png"></image>
             <image wx:elif="{{state == 3}}"  class='icon to-pay' src="/images/icon/pay-error.png"></image>
-            <image wx:elif="{{state == 4}}"  class='icon to-pay' src="/images/icon/new/标签.png"></image>
+            <image wx:elif="{{state == 4}}"  class='icon to-pay' src="/images/icon/new/biaoqian.png"></image>
 			<view class='text'>{{stateStr}}</view>
 		</view>
 	</view>
@@ -14,10 +14,20 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/摄像头.png"></image>
+                <image class="img" src="/images/icon/new/biaoqian.png"></image>
             </view>
             <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input'  disabled="true" value="创建人:  {{creatorNickName}}"></input>
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input'  disabled="true" value="任务类型:指派任务"></input>
+                <input wx:else cursor-spacing='100' class='a-input'  disabled="true" value="任务类型:{{allTypeStr}}任务"></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/shexiangtou.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="监督人:  {{creatorNickName}}"></input>
             </view>
             <view class="icon">
                 <image class="avatar" src="{{creatorAvatar}}"></image>
@@ -26,7 +36,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/个人.png"></image>
+                <image class="img" src="/images/icon/new/geren.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input'  disabled="true" value="接收人:  {{userNickName}}"></input>
@@ -38,32 +48,45 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/提醒.png"></image>
+                <image class="img" src="/images/icon/new/tixing.png"></image>
             </view>
             <view class="input-wrap">
-                <picker mode="multiSelector" disabled="{{isCreate == 1 ? false:true}}" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-                        <input cursor-spacing='100' class='a-input' placeholder="点击选择任务" bindinput="bindinputName" disabled="true" value="{{chosenJobName}}"></input>
-                </picker>
-            </view>
-        </view>
-
-        <view class="a-item">
-            <view class="icon">
-                <image class="img" src="/images/icon/new/日历.png"></image>
-            </view>
-            <view class="input-wrap">
-                <picker mode="date" disabled="{{isCreate == 1 ? false:true}}" value="{{date}}" start="{{nowDate}}" end="2099-01-01" bindchange="bindDateChange">
-                    <input cursor-spacing='100' disabled="{{isCreate == 1 ? false:true}}" class='a-input' placeholder="点击选择过期时间" value="{{date}}"></input>
+                <picker style="width: 100%" mode="multiSelector" disabled="{{isCreate == 1 ? false:true}}" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+                        <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' placeholder="点击选择任务"  disabled="true" value="{{chosenJobName}}"></input>
+                        <input wx:else cursor-spacing='100' class='a-input'  disabled="true" value="任务: {{chosenJobName}}"></input>
                 </picker>
             </view>
         </view>
 
         <view class="a-item" >
             <view class="icon">
-                <image class="img" src="/images/icon/new/信息.png"></image>
+                <image class="img" src="/images/icon/new/huiyuan.png"></image>
             </view>
             <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input' disabled="{{isCreate == 1 ? false:true}}" bindinput="bindinputRemark"  placeholder="{{isCreate == 1 ? '输入备注(可选)':'无'}}"  value="{{remark}}"></input>
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputPoints"  placeholder="完成可获得家务的点数,从发布人处扣除"  value="{{points}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' disabled="true" type='number'  value="完成获得家务点: {{points}}"></input>   
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/rili.png"></image>
+            </view>
+            <view class="input-wrap">
+                <picker mode="date" disabled="{{isCreate == 1 ? false:true}}" value="{{date}}" start="{{nowDate}}" end="2099-01-01" bindchange="bindDateChange">
+                    <input wx:if="{{isCreate == 1}}" cursor-spacing='100'  class='a-input' placeholder="点击选择过期时间" value="{{date}}"></input>
+                    <input wx:else cursor-spacing='100' disabled="true" class='a-input' value="过期时间: {{date}}"></input>
+                </picker>
+            </view>
+        </view>
+
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/xinxi.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' bindinput="bindinputRemark"  placeholder="{{isCreate == 1 ? '输入备注(可选)':'无'}}"  value="{{remark}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' disabled="true"   value="备注:{{remark == '' || remark == null ? '' : remark}}"></input>
             </view>
         </view>
 
@@ -76,10 +99,11 @@
 
         <view class="a-item" wx:if="{{canStep == 1}}">
             <view class="icon">
-                <image class="img" src="/images/icon/new/步行.png"></image>
+                <image class="img" src="/images/icon/new/buxing.png"></image>
             </view>
             <view class="input-wrap">
-                <input cursor-spacing='100' class='a-input' type='number' bindinput="bindinputCostStep" disabled="{{isCreate == 1 ? false:true}}" placeholder="输入步数,大于10000"  value="{{costStep}}"></input>
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputCostStep"  placeholder="输入步数,大于10000"  value="{{costStep}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' type='number'  disabled="true"   value="抵扣所需步数: {{costStep}}"></input>
             </view>
         </view>
     </view>

@@ -4,22 +4,40 @@ const app = getApp()
 Page({
     data: {
         users: [],
-        type:0    // 0-任务选择页面进入列表  1-家长进入  2-成员进入
+        type:0    // 0-任务选择页面进入列表  1-家长进入  2-成员进入 3-家长添加定时任务进入
     },
 
     goUserDetail: function(e) {
         let id = e.currentTarget.dataset.userid;
         let select = 0;
         let canDelete = 0;
-        if(this.data.type == 0){
-            select = 1;
-        }else if(this.data.type == 1){
-            canDelete = 1;
+        let selectToCron = 0;
+        let login = util.loginNow();
+        if(login){
+            let user = wx.getStorageSync('userInfo');
+            if(this.data.type == 0 && id == user.id){
+                wx.showToast({
+                    title: "不能对自己发布",
+                    icon: 'none',
+                    duration: 1000
+                })
+                return;
+            }
+            if(this.data.type == 0){
+                select = 1;
+            }else if(this.data.type == 1){
+                canDelete = 1;
+            }else if (this.data.type == 3){
+                select = 0;
+                selectToCron = 1;
+            }
+            console.info("list:"+select+"    "+canDelete)
+            wx.navigateTo({
+                url: '/pages/user-detail/user-detail?select='+select+'&canDelete='+canDelete+'&id=' + id + "&selectToCron=" + selectToCron,
+            })
         }
-        console.info("list:"+select+"    "+canDelete)
-        wx.navigateTo({
-            url: '/pages/user-detail/user-detail?select='+select+'&canDelete='+canDelete+'&id=' + id,
-        })
+
+
     },
 
     getUsers() {

@@ -3,87 +3,92 @@ var api = require('../../config/api.js');
 var app = getApp();
 Page({
     data: {
-        jobUserId:0,
-        creatorNickName:'',
-        creatorId:0,
-        creatorAvatar:'',
-        userId:0,
-        userAvatar:'',
-        userNickName:'',
-        date:'',
-        nowDate:'',
-        canStep:0,
-        costStep:null,
-        state:-1,
-        remark:null,
-        createTime:'',
-        updateTime:'',
-        checkTime:'',
-        finishTime:'',
-        stateStr:'',
+        cronJob:{
+            id : 0,
+            canStep:0
+        },
+        cronTypeArray:['每周','每日','每月'],
+        cronTypeIndex:0,
+        chosenCronTypeStr:'',
         objectMultiShow:[],
         objectMultiArray:[],
         multiArray: [],
         multiIndex: [0,0],
         isCreate:0,
-        userRole:0  // 用户角色:0接受者 1创建者 2其他
+        familyOwner:0  // 0-暂未加入 1-拥有者  2-成员 3-被邀请中
         ,chosenJobName: ''
         ,chosenJobId: 0
-        ,points:null
-        ,allTypeStr:''
-        ,createTypeStr:''
-        ,cronTypeStr:''
     },
 
     bindinputRemark(event) {
+        let cronJob = this.data.cronJob;
+        cronJob.remark = event.detail.value;
         this.setData({
-            remark: event.detail.value
+            cronJob:cronJob
         });
     },
 
     bindinputCostStep(event) {
         var costStep = event.detail.value.replace(/^(0+)|[^\d]+/g,'');
+        let cronJob = this.data.cronJob;
+        cronJob.costStep = costStep;
         this.setData({
-            costStep: costStep
+            cronJob:cronJob
         });
     },
 
     
     bindinputPoints(event) {
         var points = event.detail.value.replace(/^(0+)|[^\d]+/g,'');
+        let cronJob = this.data.cronJob;
+        cronJob.points = points;
         this.setData({
-            points: points
+            cronJob:cronJob
+        });
+    },
+
+    bindinputTimes(event) {
+        var times = event.detail.value.replace(/^(0+)|[^\d]+/g,'');
+        let cronJob = this.data.cronJob;
+        cronJob.times = times;
+        this.setData({
+            cronJob:cronJob
         });
     },
     
     onLoad: function(options) {
-        util.loginNow();
-        let userInfo = wx.getStorageSync('userInfo');
+        let login = util.loginNow();
+        if(!login){
+            return;
+        }
         let isCreate = options.isCreate;
-        let userRole = options.userRole;
+        let familyOwner = options.familyOwner;
         let that = this;
+        let cronJob = this.data.cronJob;
         if(isCreate == 1){
+            let creatorInfo = wx.getStorageSync('userInfo');
             // 创建任务页面
             const eventChannel = this.getOpenerEventChannel()
             // 监听事件，获取上一页面通过eventChannel传送到当前页面的数据
             eventChannel.on('userInfoEven', function(userInfo) {
+                cronJob.userAvatar = userInfo.avatar
+                cronJob.userId = userInfo.id
+                cronJob.userName = userInfo.nickName
+                
+                cronJob.watchdogName = userInfo.watchdogName
+                cronJob.watchdogId = userInfo.watchdogId
+                cronJob.watchdogAvatar = userInfo.watchdogAvatar
+
+                cronJob.creatorName = creatorInfo.nickName
+                cronJob.creatorAvatar = creatorInfo.avatar
+                cronJob.creatorId = creatorInfo.id
+
                 that.setData({
-                    userAvatar:userInfo.avatar
-                    ,userId:userInfo.id
-                    ,userNickName:userInfo.nickName
+                    cronJob : cronJob
+                    ,isCreate : isCreate
+                    ,familyOwner:familyOwner
                 })
             })
-            var tomorrow = new Date();
-            tomorrow.setTime(tomorrow.getTime()+24*60*60*1000);
-            // 页面初始化 options为页面跳转所带来的参数
-            this.setData({
-                isCreate : isCreate
-                ,userRole:userRole
-                ,creatorNickName: userInfo.nickName,
-                creatorId: userInfo.id,
-                creatorAvatar:userInfo.avatar,
-                nowDate :tomorrow.toLocaleDateString()});   
-
             // 构造家务多列选择器  
             util.request(api.ListAllJobTypeAndInfo).then(function(res) {
                 if (res.code === 200) {
@@ -97,14 +102,15 @@ Page({
                 }
             });
         }else{
-            let jobUserId = options.id;
-            if(jobUserId > 0){
-                // 获取jobUser信息
-                util.request(api.JobUserDetail,{
-                    jobUserId:jobUserId
+            let cronJobId = options.id;
+            if(cronJobId > 0){
+                // 获取cron信息
+                util.request(api.CronJobDetail,{
+                    cronJobId:cronJobId
                 }).then(function(res) {
+                    console.info(res)
                     if (res.code === 200) {
-                        that.refreshJobUser(res,isCreate,userRole);
+                        that.refreshCronJob(res,isCreate,familyOwner);
                     }else{
                         wx.showToast({
                             title: res.message,
@@ -115,34 +121,25 @@ Page({
                 });
             }
         }
+
     },
 
-    refreshJobUser: function(res,isCreate,userRole){
+    bindCronTypeChange:function(e){
+        let type = e.detail.value;
+        let cronJob = this.data.cronJob;
+        cronJob.type = type;
         this.setData({
-            isCreate : isCreate
-            ,userRole:userRole,
-            jobUserId:res.data.id,
-            creatorNickName:res.data.creatorName,
-            creatorId:res.data.creatorId,
-            creatorAvatar:res.data.creatorAvatar,
-            userId:res.data.userId,
-            userAvatar:res.data.userAvatar,
-            userNickName:res.data.userName,
-            date:res.data.expiredTime,
-            canStep:res.data.canStep,
-            costStep:res.data.costStep,
-            state:res.data.state,
-            chosenJobName:res.data.name,
-            createTime:res.data.createTime,
-            updateTime:res.data.updateTime,
-            checkTime:res.data.checkTime,
-            finishTime:res.data.finishTime,
-            stateStr:res.data.stateStr,
-            remark:res.data.remark
-            ,points:res.data.points
-            ,allTypeStr:res.data.allTypeStr
-            ,createTypeStr:res.data.createTypeStr
-            ,cronTypeStr:res.data.cronTypeStr
+            cronJob:cronJob,
+            cronTypeIndex:type,
+            chosenCronTypeStr:this.data.cronTypeArray[type]
+        })
+    },
+
+    refreshCronJob: function(res,isCreate,familyOwner){
+        this.setData({
+            cronJob:res.data
+            ,isCreate:isCreate
+            ,familyOwner:familyOwner
         });
 
     },
@@ -199,12 +196,6 @@ Page({
         // 数据更新
         this.setData(data);
     },
-    
-    bindDateChange: function(e) {
-        this.setData({
-          date: e.detail.value
-        })
-    },
 
     switchChange(e) {
         let status = e.detail.value;
@@ -212,8 +203,10 @@ Page({
         if (status == true) {
             canStep = 1;
         }
+        let cronJob = this.data.cronJob;
+        cronJob.canStep = canStep
         this.setData({
-            canStep: canStep
+            cronJob:cronJob
         });
     },
 
@@ -232,14 +225,21 @@ Page({
 
     },
 
-    saveJobUser(e) {
+    saveCronJob() {
         let multiIndex = this.data.multiIndex;
-        let userId = this.data.userId;
-        let date = this.data.date;
-        let canStep = this.data.canStep;
-        let costStep = this.data.costStep;
-        let remark = this.data.remark;
-        let points = this.data.points;
+        let canStep = this.data.cronJob.canStep;
+        let costStep = this.data.cronJob.costStep;
+        let points = this.data.cronJob.points;
+        let cronType = this.data.cronJob.type;
+        let times = this.data.cronJob.times;
+        if(times == null || times == 0 || times > 30){
+            util.showErrorToast('请输入正确的频次,不能大于30');
+            return false;
+        }
+        if(cronType == null){
+            util.showErrorToast('请选择定时类型');
+            return false;
+        }
         if(points == null){
             util.showErrorToast('请输入家务点');
             return false;
@@ -248,36 +248,25 @@ Page({
             util.showErrorToast('请选择任务');
             return false;
         }
-        if(date == null || date == ''){
-            util.showErrorToast('请选择过期时间');
-            return false;
-        }
         if(canStep == 1 ){
             if(costStep == null || costStep == '' || costStep < 10000){
                 util.showErrorToast('步数必须大于10000');
                 return false;
             }
         }
+        let param = this.data.cronJob;
         let jobId = this.data.chosenJobId;
-        let param = {
-            userId : userId,
-            jobId : jobId,
-            expireTime : date,
-            desc : remark,
-            canStep : canStep,
-            costStep : costStep,
-            points : points
-        }
+        param.jobId = jobId;
         wx.showLoading({
-            title: '提交中',
+            title: '创建中',
             mask:true
           })
-        util.request(api.CreateJobToUser, param, 'POST')
+        util.request(api.CreateCronJob, param, 'POST')
         .then(function(res) {
             wx.hideLoading()
             if (res.code === 200) {
                 wx.reLaunch({
-                  url: '../success-page/success-page?status=1',
+                  url: '../success-page/success-page?status=3',
                 })
             }else{
                 wx.showToast({
@@ -289,14 +278,14 @@ Page({
         });
     },
 
-    accept() {
+    disableCronJob() {
         wx.showLoading({
             title: '提交中',
             mask:true
         })
         let that = this;
-        util.request(api.AcceptJobUser, {
-            jobUserId:this.data.jobUserId
+        util.request(api.CloseCronJob, {
+            cronJobId:this.data.cronJob.id
         },'POST').then(function(res) {
             wx.hideLoading()
             if (res.code === 200) {
@@ -308,7 +297,7 @@ Page({
                 })
                 setTimeout(()=>{
                     wx.reLaunch({
-                        url: '/pages/job-list/job-list?isMineJob=1&state=1&doRefresh=1',
+                        url: '/pages/cron-list/cron-list?familyOwner=1&doRefresh=1',
                     });
                 },500)
             }else{
@@ -321,14 +310,14 @@ Page({
         });
     },
 
-    refuse() {
+    enableCronJob() {
         wx.showLoading({
             title: '提交中',
             mask:true
         })
         let that = this;
-        util.request(api.RefuseJobUser, {
-            jobUserId:this.data.jobUserId
+        util.request(api.OpenCronJob, {
+            cronJobId:this.data.cronJob.id
         },'POST').then(function(res) {
             wx.hideLoading()
             if (res.code === 200) {
@@ -340,7 +329,7 @@ Page({
                 })
                 setTimeout(()=>{
                     wx.reLaunch({
-                        url: '/pages/job-list/job-list?isMineJob=1&state=3&doRefresh=1',
+                        url: '/pages/cron-list/cron-list?familyOwner=1&doRefresh=1',
                     });
                 },500)
             }else{
@@ -353,14 +342,14 @@ Page({
         });
     },
 
-    finish() {
+    deleteCronJob() {
         wx.showLoading({
             title: '提交中',
             mask:true
         })
         let that = this;
-        util.request(api.FinishJobUser, {
-            jobUserId:this.data.jobUserId
+        util.request(api.DeleteCronJob, {
+            cronJobId:this.data.cronJob.id
         },'POST').then(function(res) {
             wx.hideLoading()
             if (res.code === 200) {
@@ -372,7 +361,7 @@ Page({
                 })
                 setTimeout(()=>{
                     wx.reLaunch({
-                        url: '/pages/job-list/job-list?isMineJob=0&state=4&doRefresh=1',
+                        url: '/pages/cron-list/cron-list?familyOwner=1&doRefresh=1',
                     });
                 },500)
             }else{
@@ -385,11 +374,4 @@ Page({
         });
     },
 
-    costStep:function(e){
-        wx.showToast({
-            title: "功能开发中",
-            icon: 'none',
-            duration: 2000
-        })
-    }
 })

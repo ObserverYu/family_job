@@ -7,21 +7,20 @@ Page({
         userId: 0,
         canDelete:0,
         edit:0,
-        select:0
+        select:0,
+        selectToCron:0
     },
     
     onLoad: function(options) {
-        console.info("detail:"+options.select +"   "+options.canDelete)
-        this.setData({
-            canDelete: options.canDelete,
-            select:options.select
-        });
         // 页面初始化 options为页面跳转所带来的参数
         if (options.id) {
+            this.getUserDetail(options.id,options);
+        }else{
             this.setData({
-                userId: options.id
+                canDelete: options.canDelete,
+                select:options.select,
+                selectToCron:options.selectToCron
             });
-            this.getUserDetail();
         }
     },
     
@@ -62,16 +61,20 @@ Page({
         })
     },
 
-    getUserDetail() {
+    getUserDetail(id,options) {
         let res = util.loginNow();
         if(res){
             let that = this;
             util.request(api.GetUserDetail, {
-                userId: that.data.userId
+                userId: id
             }).then(function(res) {
                 if (res.code === 200) {
                     that.setData({
-                        userInfo: res.data
+                        userInfo: res.data,
+                        userId:id
+                        ,canDelete: options.canDelete,
+                        select:options.select,
+                        selectToCron:options.selectToCron
                     });
                 }else{
                     wx.showToast({
@@ -95,38 +98,19 @@ Page({
         })
     },
 
-    saveAddress() {
-        let address = this.data.address;
-        if (address.name == '' || address.name == undefined) {
-            util.showErrorToast('请输入姓名');
-            return false;
-        }
-        if (address.mobile == '' || address.mobile == undefined) {
-            util.showErrorToast('请输入手机号码');
-            return false;
-        }
-        if (address.district_id == 0 || address.district_id == undefined) {
-            util.showErrorToast('请输入省市区');
-            return false;
-        }
-        if (address.address == '' || address.address == undefined) {
-            util.showErrorToast('请输入详细地址');
-            return false;
-        }
+    goCreateCronPage: function() {
         let that = this;
-        util.request(api.SaveAddress, {
-            id: address.id,
-            name: address.name,
-            mobile: address.mobile,
-            province_id: address.province_id,
-            city_id: address.city_id,
-            district_id: address.district_id,
-            address: address.address,
-            is_default: address.is_default,
-        }, 'POST').then(function(res) {
-            if (res.errno === 0) {
-                wx.navigateBack()
-            }
-        });
+        let login = util.loginNow();
+        if(login){
+            let userInfo = wx.getStorageSync('userInfo');
+            wx.navigateTo({
+                url: '/pages/create-cron/create-cron?isCreate=1'+'&familyOwner='+userInfo.familyOwner
+                ,success: function(res) {
+                    // 通过eventChannel向被打开页面传送数据
+                    res.eventChannel.emit('userInfoEven', that.data.userInfo)
+                  }
+            })
+        }
+
     },
 })

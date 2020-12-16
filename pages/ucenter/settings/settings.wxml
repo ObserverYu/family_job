@@ -1,2 +1,44 @@
-<!--pages/ucenter/settings/settings.wxml-->
-<text>pages/ucenter/settings/settings.wxml</text>
+<view class="container">
+
+    <view class='status-wrap' bindtap='clearTimer'>
+		<view class='status-text'>
+            <image class='icon to-pay' src="/images/icon/new/huiyuan.png"></image>
+			<view class='text'>当前家务点数: {{points}}</view>
+		</view>
+    </view>
+    
+    <view class='edit-container'>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/shexiangtou.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="我的监督人:  {{watchdogName == '' || watchdogName == null ? '暂未设定' : watchdogName}}"></input>
+            </view>
+            <view class="icon" wx:if="{{!watchdogAvatar == '' && !watchdogAvatar == null}}">
+                <image class="avatar" src="{{watchdogAvatar}}"></image>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/shijian.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input class='a-input'  value="创建时间: {{createTime}}" ></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/geren.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input class='a-input' bindtap="copyTBL"  value="邀请码(点击复制): {{inviteCode||''}}" ></input>
+            </view>
+        </view>
+
+    </view>
+
+</view>

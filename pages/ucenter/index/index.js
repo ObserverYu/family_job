@@ -54,7 +54,7 @@ Page({
         let res = util.loginNow();
         if (res == true) {
             wx.navigateTo({
-                url: '/pages/ucenter/settings/index',
+                url: '/pages/ucenter/settings/settings',
             });
         }
     },

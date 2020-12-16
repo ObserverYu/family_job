@@ -3,7 +3,7 @@
     <view class='edit-container'>
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/主页.png"></image>
+                <image class="img" src="/images/icon/new/zhuye.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input'  disabled="true" value="家庭名:  {{inviteRecord.familyName}}"></input>
@@ -12,7 +12,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/摄像头.png"></image>
+                <image class="img" src="/images/icon/new/shexiangtou.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input'  disabled="true" value="家长:  {{inviteRecord.familyCreatorName}}"></input>
@@ -24,7 +24,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/个人.png"></image>
+                <image class="img" src="/images/icon/new/geren.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input'  disabled="true" value="邀请人:  {{inviteRecord.inviterName}}"></input>
@@ -37,7 +37,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/时间.png"></image>
+                <image class="img" src="/images/icon/new/shijian.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' disabled="true" class='a-input' value="邀请时间:  {{inviteRecord.createTime}}"></input>

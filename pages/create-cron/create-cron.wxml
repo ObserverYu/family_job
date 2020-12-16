@@ -1,0 +1,175 @@
+<view class="container">
+
+    <view class='status-wrap' wx:if="{{isCreate != 1}}" bindtap='clearTimer'>
+		<view class='status-text'>
+            <image wx:if="{{cronJob.state == 0}}"  class='icon to-pay' src="/images/icon/pay-error.png"></image>
+            <image wx:elif="{{cronJob.state == 1}}"  class='icon to-pay' src="/images/icon/new/shijian.png"></image>
+            <image wx:elif="{{cronJob.state == 2}}"  class='icon to-pay' src="/images/icon/new/pay-error.png"></image>
+			<view class='text'>{{cronJob.stateStr}}</view>
+		</view>
+	</view>
+    
+    <view class='edit-container'>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/biaoqian.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="定时任务母版"></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/dianpu.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="创建人:  {{cronJob.creatorName}}"></input>
+            </view>
+            <view class="icon">
+                <image class="avatar" src="{{cronJob.creatorAvatar}}"></image>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/shexiangtou.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="监督人:  {{cronJob.watchdogName}}"></input>
+            </view>
+            <view class="icon">
+                <image class="avatar" src="{{cronJob.watchdogAvatar}}"></image>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/geren.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input'  disabled="true" value="接收人:  {{cronJob.userName}}"></input>
+            </view>
+            <view class="icon">
+                <image class="avatar" src="{{cronJob.userAvatar}}"></image>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/menpiao.png"></image>
+            </view>
+            <view class="input-wrap">
+                <picker bindchange="bindCronTypeChange" value="{{cronTypeIndex}}" range="{{cronTypeArray}}">
+                        <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' placeholder="点击选择类型(每周等)" disabled="true" value="{{chosenCronTypeStr}}"></input>
+                        <input wx:else cursor-spacing='100' class='a-input'  disabled="true" value="定时类型: {{cronJob.cronTypeStr}}"></input>
+                </picker>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/tixing.png"></image>
+            </view>
+            <view class="input-wrap">
+                <picker mode="multiSelector" disabled="{{isCreate == 1 ? false:true}}" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+                        <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' placeholder="点击选择任务"  disabled="true" value="{{chosenJobName}}"></input>
+                        <input wx:else cursor-spacing='100' class='a-input'  disabled="true" value="任务: {{cronJob.name}}"></input>
+                </picker>
+            </view>
+        </view>
+
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/huiyuan.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputPoints"  placeholder="完成可获得家务的点数"  value="{{cronJob.points}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' disabled="true" type='number'  value="完成获得家务点: {{cronJob.points}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/liebiao.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputTimes"  placeholder="时间段内次数"  value="{{cronJob.times}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' disabled="true" type='number'  value="完成获得家务点: {{cronJob.times}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/xinxi.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' bindinput="bindinputRemark"  placeholder="{{isCreate == 1 ? '输入备注(可选)':'无'}}"  value="{{cronJob.remark}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' disabled="true"   value="备注:{{cronJob.remark == '' || cronJob.remark == null ? '' : cronJob.remark}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="default-wrap">
+            <view class="text">可以使用微信步数抵扣</view>
+                <switch class="switch" disabled="{{isCreate == 1 ? false:true}}" checked="{{cronJob.canStep == 1 ? true:false}}" bindchange="switchChange"></switch>
+            </view>
+        </view>
+
+        <view class="a-item" wx:if="{{cronJob.canStep == 1}}">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/buxing.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputCostStep"  placeholder="输入步数,大于10000"  value="{{cronJob.costStep}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' type='number'  disabled="true"   value="抵扣所需步数: {{cronJob.costStep}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="default-wrap">
+            <view class="text">  </view>
+            </view>
+        </view>
+
+    </view>
+
+	<view class="order-info" wx:if="{{isCreate == 0}}">
+		<view class='row-box-wrap'>
+			<view class="row-box2">
+				<view class="row-label2">创建时间：</view>
+				<view class="right-text2">{{cronJob.createTime}}</view>
+			</view>
+			<view wx:if="{{cronJob.updateTime}}" class="row-box2">
+				<view class="row-label2">修改时间：</view>
+				<view class="right-text2">{{cronJob.updateTime}}</view>
+			</view>
+            <view  class="row-box2">
+				<view class="row-label2"></view>
+				<view class="right-text2"></view>
+			</view>
+		</view>
+	</view>
+    
+    <view class="cart-add-box">
+        <block wx:if="{{isCreate == 1 && familyOwner == 1}}"  bindtap="saveCronJob">
+            <view class="cart-empty" bindtap="saveCronJob">创建</view>
+        </block>
+
+        <block wx:if="{{isCreate == 0 && familyOwner == 1 && cronJob.state == 1}}"  bindtap="disableCronJob">
+            <view class="cart-empty" bindtap="disableCronJob">暂停</view>
+        </block>
+
+
+        <block wx:if="{{isCreate == 0 && familyOwner == 1 && cronJob.state == 0}}" bindtap="deleteCronJob">
+            <view class="refuse" bindtap="deleteCronJob">删除</view>
+        </block>
+
+        <block wx:if="{{isCreate == 0 && familyOwner == 1 && cronJob.state == 0}}" bindtap="enableCronJob">
+            <view class="cart-empty" bindtap="enableCronJob">启用</view>
+        </block>
+
+
+    </view>
+</view>

@@ -156,12 +156,13 @@ Page({
         })
     },
 
-    toDailyJob: function(e) {
-        wx.showToast({
-            title: "开发中",
-            icon: 'none',
-            duration: 1000
-        })
+    toCronJob: function(e) {
+        let res = util.loginNow();
+        if (res) {
+            wx.navigateTo({
+                url: '/pages/cron-list/cron-list?doRefresh=1&familyOwner='+this.data.userInfo.familyOwner
+            });
+        }
     },
     
 })

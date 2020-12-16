@@ -4,8 +4,6 @@ const app = getApp()
 // 触底上拉刷新 TODO 这里要将page传给服务器，作者没写
 Page({
     data: {
-        orderList: [],
-        allJobList: [],
         jobList:[],
         allPage: 1,
         allCount: 0,
@@ -82,8 +80,6 @@ Page({
         let doRefresh = this.data.doRefresh;
         if (doRefresh == 1) {
             this.setData({
-                orderList: [],
-                allOrderList: [],
                 allPage: 1,
                 allCount: 0,
                 size: 8,

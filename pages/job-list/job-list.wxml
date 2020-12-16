@@ -3,28 +3,28 @@
 		<view class="tab {{ state == -1 ? 'active' : ''}}" bindtap="switchTab" data-state='-1'>全部</view>
 
 		<view class="tab {{ state == 0 ? 'active' : ''}}" bindtap="switchTab" data-state='0'>
-			<view wx:if="{{isMineJob == 1 && count.myToCheck > 0 }}" class='list-num'>{{count.myToCheck}}</view>
-			<view wx:if="{{isMineJob == 0 && count.othersToCheck > 0 }}" class='list-num'>{{count.othersToCheck}}</view>待审核
+			<view wx:if="{{isMineJob == 1 && count.myToCheck > 0 }}" class='list-num'>{{count.myToCheck > 99 ? '99+' : count.myToCheck}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersToCheck > 0 }}" class='list-num'>{{count.othersToCheck > 99 ? '99+' : count.othersToCheck}}</view>待审核
 		</view>
 
 		<view class="tab {{ state == 1 ? 'active' : ''}}" bindtap="switchTab" data-state='1'>
-			<view wx:if="{{isMineJob == 1 && count.myToFinish > 0 }}" class='list-num'>{{count.myToFinish}}</view>
-			<view wx:if="{{isMineJob == 0 && count.othersToFinish > 0 }}" class='list-num'>{{count.othersToFinish}}</view>待完成
+			<view wx:if="{{isMineJob == 1 && count.myToFinish > 0 }}" class='list-num'>{{count.myToFinish > 99 ? '99+' : count.myToFinish}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersToFinish > 0 }}" class='list-num'>{{count.othersToFinish > 99 ? '99+' : count.othersToFinish}}</view>待完成
 		</view>
 
 		<view class="tab {{ state == 4 ? 'active' : ''}}" bindtap="switchTab" data-state='4'>
-			<view wx:if="{{isMineJob == 1 && count.myFinished > 0 }}" class='list-num'>{{count.myFinished}}</view>
-			<view wx:if="{{isMineJob == 0 && count.othersFinished > 0 }}" class='list-num'>{{count.othersFinished}}</view>已完成
+			<view wx:if="{{isMineJob == 1 && count.myFinished > 0 }}" class='list-num'>{{count.myFinished > 99 ? '99+' : count.myFinished}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersFinished > 0 }}" class='list-num'>{{count.othersFinished > 99 ? '99+' : count.othersFinished}}</view>已完成
 		</view>
 
 		<view class="tab {{ state == 3 ? 'active' : ''}}" bindtap="switchTab" data-state='3'>
-			<view wx:if="{{isMineJob == 1 && count.myRefused > 0 }}" class='list-num'>{{count.myRefused}}</view>
-			<view wx:if="{{isMineJob == 0 && count.othersRefused > 0 }}" class='list-num'>{{count.othersRefused}}</view>已拒绝
+			<view wx:if="{{isMineJob == 1 && count.myRefused > 0 }}" class='list-num'>{{count.myRefused > 99 ? '99+' : count.myRefused}}</view>
+			<view wx:if="{{isMineJob == 0 && count.othersRefused > 0 }}" class='list-num'>{{count.othersRefused > 99 ? '99+' : count.othersRefused}}</view>已拒绝
 		</view>
 
 		<view class="tab {{ state == 2 ? 'active' : ''}}" bindtap="switchTab" data-state='2'>
-					<view wx:if="{{isMineJob == 1 && count.myExpired > 0 }}" class='list-num'>{{count.myExpired}}</view>
-					<view wx:if="{{isMineJob == 0 && count.othersExpired > 0 }}" class='list-num'>{{count.othersExpired}}</view>已过期
+					<view wx:if="{{isMineJob == 1 && count.myExpired > 0 }}" class='list-num'>{{count.myExpired > 99 ? '99+' : count.myExpired}}</view>
+					<view wx:if="{{isMineJob == 0 && count.othersExpired > 0 }}" class='list-num'>{{count.othersExpired > 99 ? '99+' : count.othersExpired}}</view>已过期
 		</view>
 	</view>
 
@@ -54,12 +54,16 @@
 							</view>
 							<text class='order-txt'>{{item.creatorName}}</text>
 					</view>
+
 					<view class='icon-wrap'>
 							<view class='order-icon-wrap'>
-									<image class='order-icon' src='/images/icon/new/提醒.png'>
+									<image class='order-icon' wx:if="{{item.createType == 0}}" src='/images/icon/new/tixing.png'>
+									</image>
+									<image class='order-icon' wx:elif="{{item.createType == 1}}" src='/images/icon/new/shijian.png'>
 									</image>
 							</view>
-							<text class='order-txt'>指派→</text>
+							<text class='order-txt' wx:if="{{item.createType == 0}}">指派→</text>
+							<text class='order-txt' wx:elif="{{item.createType == 1}}">监督→</text>
 					</view>
 
 					<view class='icon-wrap' bindtap='goUserDetail'>
@@ -73,7 +77,7 @@
 		</view>
 			<view class='order-price-wrap'>
 				<view class='order-price'>
-					<view class='price-label'>任务：</view>
+					<view class='price-label'>{{item.allTypeStr}}任务：</view>
 					<view class='price-sum'>{{item.name}}</view>
 				</view>
 			</view>

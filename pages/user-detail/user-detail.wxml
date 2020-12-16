@@ -17,7 +17,7 @@
     <view class='edit-container'>
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/个人.png"></image>
+                <image class="img" src="/images/icon/new/geren.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input' disabled='true' value="角色: {{userInfo.userType}}"></input>
@@ -25,7 +25,7 @@
         </view>
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/摄像头.png"></image>
+                <image class="img" src="/images/icon/new/shexiangtou.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input' disabled='true' value="是否家长: {{userInfo.isOwnerStr}}"></input>
@@ -34,7 +34,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/时间.png"></image>
+                <image class="img" src="/images/icon/new/shijian.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input' disabled='true' value="加入时间: {{userInfo.lastJoinTime}}"></input>
@@ -43,6 +43,9 @@
     </view>
 
     <view class='btn-wrap'  wx:if="{{select == 1}}" bindtap="goCreateJobPage">
+        <view class="btn active">指定</view>
+    </view>
+    <view class='btn-wrap'  wx:if="{{selectToCron == 1}}" bindtap="goCreateCronPage">
         <view class="btn active">选择</view>
     </view>
     <view class='btn-wrap'  wx:if="{{edit == 1}}" bindtap="saveUser">

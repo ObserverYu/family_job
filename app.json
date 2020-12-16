@@ -10,6 +10,7 @@
       "pages/success-page/success-page",
       "pages/family-detail/family-detail",
       "pages/job-list/job-list",
+      "pages/cron-list/cron-list",
       "pages/ucenter/settings/settings",
       "pages/user-list/user-list",
       "pages/user-detail/user-detail"

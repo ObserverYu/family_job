@@ -24,11 +24,21 @@
             </view>
         </view>
     </view>
+    <view class="li-wrap">
+        <view class="list" bindtap="toUserList">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/new/huiyuan.png"></image>
+                </view>
+                <view class="text">家务点数: {{userInfo.points}}</view>
+            </view>
+        </view>
+    </view>
     <view class="order-container">
         <view class='header' data-isminejob='0' data-state='-1' bindtap='toJobListTap'>
             <view class='top-title'>
                 <view class='left-line'></view>
-                <view class='text'>我发布的</view>
+                <view class='text'>我监督的</view>
             </view>
             <view class='see-more'>
                 <view class="text">查看全部家务</view>
@@ -38,25 +48,25 @@
         <view class='btn-container'>
             <view class='icon-wrap' data-isminejob='0' data-state='0' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/new/灵感.png'>
+                    <image class='order-icon' src='/images/icon/new/linggan.png'>
                     </image>
-                    <view wx:if="{{status.othersToCheck > 0 }}" class='red-point'>{{status.othersToCheck}}</view>
+                    <view wx:if="{{status.othersToCheck > 0 }}" class='red-point'>{{status.othersToCheck  > 99 ? '99+' : status.othersToCheck}}</view>
                 </view>
                 <text class='order-txt'>待接受</text>
             </view>
             <view class='icon-wrap' data-isminejob='0' data-state='1' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/new/提醒.png'>
+                    <image class='order-icon' src='/images/icon/new/tixing.png'>
                     </image>
-                    <view wx:if="{{status.othersToFinish > 0 }}" class='red-point'>{{status.othersToFinish}}</view>
+                    <view wx:if="{{status.othersToFinish > 0 }}" class='red-point'>{{status.othersToFinish  > 99 ? '99+' : status.othersToFinish}}</view>
                 </view>
                 <text class='order-txt'>待完成</text>
             </view>
             <view class='icon-wrap' data-isminejob='0' data-state='4' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/new/标签.png'>
+                    <image class='order-icon' src='/images/icon/new/biaoqian.png'>
                     </image>
-                    <view wx:if="{{status.othersFinished > 0 }}" class='red-point'>{{status.othersFinished}}</view>
+                    <view wx:if="{{status.othersFinished > 0 }}" class='red-point'>{{status.othersFinished  > 99 ? '99+' : status.othersFinished}}</view>
                 </view>
                 <text class='order-txt'>已完成</text>
             </view>
@@ -77,25 +87,25 @@
         <view class='btn-container'>
             <view class='icon-wrap' data-isminejob='1' data-state='0' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/new/灵感.png'>
+                    <image class='order-icon' src='/images/icon/new/linggan.png'>
                     </image>
-                    <view wx:if="{{status.myToCheck > 0 }}" class='red-point'>{{status.myToCheck}}</view>
+                    <view wx:if="{{status.myToCheck > 0 }}" class='red-point'>{{status.myToCheck  > 99 ? '99+' : status.myToCheck}}</view>
                 </view>
                 <text class='order-txt'>待审核</text>
             </view>
             <view class='icon-wrap' data-isminejob='1' data-state='1' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/new/提醒.png'>
+                    <image class='order-icon' src='/images/icon/new/tixing.png'>
                     </image>
-                    <view wx:if="{{status.myToFinish > 0 }}" class='red-point'>{{status.myToFinish}}</view>
+                    <view wx:if="{{status.myToFinish > 0 }}" class='red-point'>{{status.myToFinish > 99 ? '99+' : status.myToFinish}}</view>
                 </view>
                 <text class='order-txt'>待完成</text>
             </view>
             <view class='icon-wrap' data-isminejob='1' data-state='4' bindtap='toJobListTap'>
                 <view class='order-icon-wrap'>
-                    <image class='order-icon' src='/images/icon/new/标签.png'>
+                    <image class='order-icon' src='/images/icon/new/biaoqian.png'>
                     </image>
-                    <view wx:if="{{status.myFinished > 0 }}" class='red-point'>{{status.myFinished}}</view>
+                    <view wx:if="{{status.myFinished > 0 }}" class='red-point'>{{status.myFinished  > 99 ? '99+' : status.myFinished}}</view>
                 </view>
                 <text class='order-txt'>已完成</text>
             </view>
@@ -108,7 +118,7 @@
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-post.png"></image>
                 </view>
-                <view class="text">发布任务</view>
+                <view class="text">发布指派任务</view>
             </view>
             <view class="arrow"></view>
         </view>

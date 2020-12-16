@@ -4,10 +4,10 @@
             <image src="/images/icon/pay-success.png" class="success-img"></image>
         </view>
         <view class='text-wrap'>
-            <view class="success-text">任务提交成功</view>
+            <view class="success-text">指派任务提交成功</view>
             <view class="success-text">等待家人接受</view>
         </view>
-        <view class="to-order-btn" bindtap="toUserList">
+        <view class="to-order-btn" data-type='0' bindtap="toUserList">
             继续发布
         </view>
         <view class='btn-go-order' bindtap="toIndexPage">返回我的页面</view>
@@ -18,11 +18,25 @@
             <image src="/images/icon/pay-success.png" class="success-img"></image>
         </view>
         <view class='text-wrap'>
-            <view class="success-text">邀请成功</view>
+            <view class="success-text">邀请成员成功</view>
             <view class="success-text">等待接受</view>
         </view>
         <view class="to-order-btn" bindtap="toInvitePage">
             继续邀请
+        </view>
+        <view class='btn-go-order' bindtap="toMyHomePage">返回我的家</view>
+    </view>
+
+    <view wx:elif="{{status == 3}}" class="result-wrap">
+        <view class='image-wrap'>
+            <image src="/images/icon/pay-success.png" class="success-img"></image>
+        </view>
+        <view class='text-wrap'>
+            <view class="success-text">创建定时任务成功</view>
+            <view class="success-text">该定时任务已启动</view>
+        </view>
+        <view class="to-order-btn" data-type='3' bindtap="toUserList">
+            继续创建
         </view>
         <view class='btn-go-order' bindtap="toMyHomePage">返回我的家</view>
     </view>

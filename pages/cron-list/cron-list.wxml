@@ -1,0 +1,64 @@
+<view class="container">
+
+	<view class="no-order {{cronList.length > 0? 'show':'' }}" hidden="" wx:if="{{cronList.length <= 0}}">
+		<image src="/images/icon/no-order.png" class="no-order-img"></image>
+		<view class="text">没有定时任务</view>
+		<view  class="to-index-btn" bindtap="toMyHomePage">
+			返回我的家
+		</view>
+	</view>
+
+	<view wx:else class="wrap">
+		<!--  待付款  -->
+		<view bindtap='toCronJobDetails' class='order-list-wrap' data-id="{{item.id}}" wx:for="{{cronList}}" wx:key="id">
+			
+			<view class='list-top-wrap'>
+				<view class='time'>{{item.updateTime}}</view>
+				<view class='status'>
+					<view class="order-status">{{item.cronTypeStr}}任务({{item.stateStr}})</view>
+				</view>
+			</view>
+
+			<view class='btn-container'>
+					<view class='icon-wrap' bindtap='goUserDetail'>
+							<view class='order-icon-wrap'>
+									<image class='order-icon' src='{{item.watchdogAvatar}}'></image>
+							</view>
+							<text class='order-txt'>{{item.watchdogName}}</text>
+					</view>
+
+					<view class='icon-wrap'>
+							<view class='order-icon-wrap'>
+									<image class='order-icon' src='/images/icon/new/shijian.png'>
+									</image>
+							</view>
+							<text class='order-txt' >监督→</text>
+					</view>
+
+					<view class='icon-wrap' bindtap='goUserDetail'>
+							<view class='order-icon-wrap'>
+									<image class='order-icon' src='{{item.userAvatar}}'>
+									</image>
+							</view>
+							<text class='order-txt'>{{item.userName}}</text>
+					</view>
+
+		</view>
+			<view class='order-price-wrap'>
+				<view class='order-price'>
+					<view class='price-label'>任务：</view>
+					<view class='price-sum'>{{item.name}}</view>
+				</view>
+			</view>
+
+		</view>
+		<view wx:if="{{showTips}}" class="no-more-goods">没有更多啦</view>
+	</view>
+
+	<view class="cart-add-box" wx:if="{{familyOwner == 1}}">
+        <block  bindtap="toUserListPage">
+            <view class="cart-empty" bindtap="toUserListPage">新增定时任务</view>
+        </block>
+	</view>
+
+</view>

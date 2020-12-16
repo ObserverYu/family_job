@@ -3,7 +3,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/主页.png"></image>
+                <image class="img" src="/images/icon/new/zhuye.png"></image>
             </view>
             <view class="input-wrap" wx:if="{{familyId == 0}}">
                 <input cursor-spacing='100' class='a-input' bindinput="bindinputName" placeholder='请输入家庭名' value="{{family.name}}"></input>
@@ -15,7 +15,7 @@
 
         <view class="a-item" wx:if="{{familyId != 0}}">
             <view class="icon">
-                <image class="img" src="/images/icon/new/摄像头.png"></image>
+                <image class="img" src="/images/icon/new/shexiangtou.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' class='a-input'  disabled="true" value="家长:  {{family.ownerName}}"></input>
@@ -27,7 +27,7 @@
 
         <view class="a-item" wx:if="{{familyId != 0}}">
             <view class="icon">
-                <image class="img" src="/images/icon/new/时间.png"></image>
+                <image class="img" src="/images/icon/new/shijian.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' disabled="true" class='a-input' value="创建时间:  {{family.createTime}}"></input>

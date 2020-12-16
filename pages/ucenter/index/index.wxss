@@ -50,7 +50,7 @@ page {
 .userinfo {
     display: flex;
     width: 100%;
-    margin-bottom: 24rpx;
+    /* margin-bottom: 24rpx; */
     box-sizing: border-box;
     position: relative;
     background: #fff;
@@ -250,6 +250,16 @@ page {
     padding-left: 30rpx;
 }
 
+.li-wrap-points {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24rpx;
+    background: #fff;
+    flex-direction: column;
+    padding-left: 30rpx;
+    margin: 0 30rpx;
+}
+
 .li-wrap .list {
     display: flex;
     justify-content: space-between;
@@ -377,6 +387,63 @@ page {
 }
 
 .contact-btn .arrow {
+    width: 10rpx;
+    height: 10rpx;
+    border-top: 4rpx solid #ccc;
+    border-right: 4rpx solid #ccc;
+    transform: rotate(45deg);
+}
+
+
+.li-wrap-points {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24rpx;
+    background: #fff;
+    flex-direction: column;
+    padding-left: 30rpx;
+    margin: 0 30rpx;
+}
+
+.li-wrap-points .list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100rpx;
+    box-sizing: border-box;
+    border-bottom: 1rpx solid #f1f1f1;
+    padding-right: 30rpx;
+}
+
+.li-wrap-points .list:last-child {
+    border-bottom: none;
+}
+
+.li-wrap-points .list .list-l {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.li-wrap-points .list .list-l .icon {
+    width: 40rpx;
+    height: 40rpx;
+    margin-right: 20rpx;
+    /* background: #f1f1f1; */
+}
+
+.li-wrap-points .list .list-l .icon .img {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.li-wrap-points .list .list-l .text {
+    font-size: 28rpx;
+    color: #333;
+}
+
+.li-wrap-points .list .arrow {
     width: 10rpx;
     height: 10rpx;
     border-top: 4rpx solid #ccc;

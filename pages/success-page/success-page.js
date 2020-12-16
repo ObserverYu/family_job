@@ -4,11 +4,7 @@ var api = require('../../config/api.js');
 var app = getApp();
 Page({
     data: {
-        status: 0,
-        orderId: 0,
-        is_over:0,
-        productId:0,
-        imageUrl:''
+        status: 0   // 1-发布指派任务成功  2-邀请成功  3-发布定时任务成功
     },
     onLoad: function(options) {
         // 页面初始化 options为页面跳转所带来的参数
@@ -16,6 +12,7 @@ Page({
             status: options.status
         })
     },
+
     toIndexPage: function(event) {
         wx.switchTab({
             url: '/pages/ucenter/index/index',
@@ -28,9 +25,10 @@ Page({
         });
     },
 
-    toUserList: function() {
+    toUserList: function(e) {
+        let type = e.currentTarget.dataset.type;
         wx.reLaunch({
-            url: '/pages/user-list/user-list?type=0'
+            url: '/pages/user-list/user-list?type='+type
         });
     },
 

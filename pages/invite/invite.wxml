@@ -3,7 +3,7 @@
 
         <view class="a-item">
             <view class="icon">
-                <image class="img" src="/images/icon/new/个人.png"></image>
+                <image class="img" src="/images/icon/new/geren.png"></image>
             </view>
             <view class="input-wrap">
                 <input cursor-spacing='100' bindinput="bindinputInviteCode" class='a-input' placeholder="输入被邀请人邀请码" value="{{inviteCode}}"></input>

@@ -21,7 +21,7 @@
         <view class='head-wrap' wx:else bindtap='goFamilyDetail'>
             <view class="head-l">
                 <view class='l'>
-                    <image class='avatar' src="/images/icon/new/主页.png"></image>
+                    <image class='avatar' src="/images/icon/new/zhuye.png"></image>
                 </view>
                 <view class='r'>
                     <view class='t'>
@@ -71,6 +71,16 @@
             <view class="arrow"></view>
         </view>
 
+        <view class="list" bindtap="toCronJob">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/new/heibaishijian.png"></image>
+                </view>
+                <view class="text">定时家务</view>
+            </view>
+            <view class="arrow"></view>
+        </view>
+
         <view class="list" bindtap="toStatisticsPage">
             <view class="list-l">
                 <view class="icon">
@@ -81,15 +91,6 @@
             <view class="arrow"></view>
         </view>
 
-        <view class="list" bindtap="toDailyJob">
-            <view class="list-l">
-                <view class="icon">
-                    <image class="img" src="/images/icon/new/列表.png"></image>
-                </view>
-                <view class="text">每日家务</view>
-            </view>
-            <view class="arrow"></view>
-        </view>
     </view>
 
     <view class="invite" wx:if="{{hasUserInfo}}">
