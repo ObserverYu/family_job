@@ -4,6 +4,10 @@ var app = getApp();
 Page({
     data: {
         inviteCode:''
+        ,points:0
+        ,createTime:''
+        ,watchdogAvatar:''
+        ,watchdogName:''
     },
     // 复制
     copyTBL: function (e) {
@@ -23,6 +27,10 @@ Page({
             let userInfo = wx.getStorageSync('userInfo')
             this.setData({
                 inviteCode:userInfo.inviteCode
+                ,points:userInfo.points
+                ,createTime:userInfo.createTime
+                ,watchdogAvatar:userInfo.watchdogAvatar
+                ,watchdogName:userInfo.watchdogName
             })
         }
     },

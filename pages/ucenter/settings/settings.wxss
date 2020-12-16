@@ -340,3 +340,36 @@ page {
     border-right: 4rpx solid #ccc;
     transform: rotate(45deg);
 }
+
+.status-wrap {
+    width: 100%;
+    height: 160rpx;
+    background: -webkit-linear-gradient(left, #52466b, #594d72); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(right, #52466b, #594d72); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(right, #52466b, #594d72); /* Firefox 3.6 - 15 */
+    background: linear-gradient(to right, #52466b, #594d72); /* 标准的语法（必须放在最后） */
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24rpx;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.status-wrap .status-text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.status-wrap .icon {
+    width: 48rpx;
+    height: 48rpx;
+    margin-right: 18rpx;
+}
+
+.status-wrap .text {
+    font-size: 30rpx;
+    color: #fff;
+    line-height: 160rpx;
+}
+
