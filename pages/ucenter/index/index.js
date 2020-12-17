@@ -18,8 +18,7 @@ Page({
             this.setData({
                 hasUserInfo: 0,
             });
-        }
-        else{
+        }else{
             this.setData({
                 hasUserInfo: 1,
             });
@@ -27,25 +26,28 @@ Page({
         this.setData({
             userInfo: userInfo,
         });
-        this.getJobInfo();
-        wx.removeStorageSync('categoryId');
+        this.getHomeInfo(userInfo);
     },
 
     onPullDownRefresh: function() {
         wx.showNavigationBarLoading()
-        this.getJobInfo();
+        this.getHomeInfo();
         wx.hideNavigationBarLoading() //完成停止加载
         wx.stopPullDownRefresh() //停止下拉刷新
     },
 
-    getJobInfo: function(e) {
+    getHomeInfo: function(userInfoSt) {
         let that = this;
-        util.request(api.JobCountInfo).then(function(res) {
+        util.request(api.HomePageInfo).then(function(res) {
             if (res.code === 200) {
-                let status = res.data;
+                let status = res.data.jobCountInfo;
+                let userInfo = that.data.userInfo;
+                userInfo.points = res.data.myUserInfo.points;
                 that.setData({
-                    status: status
+                    status: status,
+                    userInfo: userInfo
                 });
+                wx.setStorageSync('userInfo', userInfo)
             }
         });
     },

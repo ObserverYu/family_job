@@ -82,7 +82,18 @@ Page({
             name: family.name,
         }, 'POST').then(function(res) {
             if (res.code === 200) {
-                wx.navigateBack()
+                let userInfo = wx.getStorageSync('userInfo');
+                userInfo.familyOwner = 1;
+                wx.setStorageSync('userInfo', userInfo)
+                wx.switchTab({
+                  url: '/pages/index/index',
+                });
+            }else{
+                wx.showToast({
+                    title: res.message,
+                    icon: 'none',
+                    duration: 1000
+                })
             }
         });
     },

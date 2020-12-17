@@ -1,11 +1,14 @@
-const ApiRootUrl = 'http://localhost:9410/';
-//const ApiRootUrl = 'https://family.lovejiangbaby.cn/';
+//const ApiRootUrl = 'http://localhost:9410/';
+const ApiRootUrl = 'https://family.lovejiangbaby.cn/';
 
 module.exports = {
     // 个人
     AuthLoginByWeixin: ApiRootUrl + 'user/loginByWeixin', //微信登录
     GetUsers: ApiRootUrl + 'user/userList',
     GetUserDetail:ApiRootUrl + 'user/userDetail',
+    FreshSendMsg:ApiRootUrl + 'user/freshSendMsg',
+    HomePageInfo:ApiRootUrl + 'user/homePageInfo',
+    GetMyUserInfo:ApiRootUrl + 'user/getMyUserInfo',
     // 家务
     JobCountInfo: ApiRootUrl + 'job/jobCount', // 我的页面获取家务数据
     ListAllJobType: ApiRootUrl + 'job/listAllType', //所有家务类别

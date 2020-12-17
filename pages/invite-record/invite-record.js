@@ -1,5 +1,6 @@
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
+const user = require('../../services/user.js');
 var app = getApp();
 Page({
     data: {
@@ -55,6 +56,7 @@ Page({
                         url: '/pages/index/index',
                     });
                 },500)
+                wx.setStorageSync('userInfo', res.data)
             }else{
                 wx.showToast({
                     title: res.message,
@@ -86,6 +88,7 @@ Page({
                         url: '/pages/index/index',
                     });
                 },500)
+                wx.setStorageSync('userInfo', res.data)
             }else{
                 wx.showToast({
                     title: res.message,

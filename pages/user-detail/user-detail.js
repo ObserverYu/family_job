@@ -76,6 +76,18 @@ Page({
                         select:options.select,
                         selectToCron:options.selectToCron
                     });
+                    // console.info("顺便更新存储")
+                    wx.getStorage({
+                        key: 'userInfo',
+                        success (res) {
+                            if(res.data.id == id){
+                                wx.setStorage({
+                                    data: res.data,
+                                    key: 'userInfo',
+                                  })
+                            }
+                        }
+                    })
                 }else{
                     wx.showToast({
                         title: res.message,

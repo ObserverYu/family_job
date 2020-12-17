@@ -24,7 +24,7 @@
             </view>
         </view>
     </view>
-    <view class="li-wrap">
+    <view class="li-wrap" wx:if="{{hasUserInfo == 1}}">
         <view class="list" bindtap="toUserList">
             <view class="list-l">
                 <view class="icon">

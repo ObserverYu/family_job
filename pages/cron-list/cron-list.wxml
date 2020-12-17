@@ -1,11 +1,8 @@
 <view class="container">
 
-	<view class="no-order {{cronList.length > 0? 'show':'' }}" hidden="" wx:if="{{cronList.length <= 0}}">
+	<view class="no-order {{cronList.length <= 0? 'show':'' }}" hidden="" wx:if="{{cronList.length <= 0}}">
 		<image src="/images/icon/no-order.png" class="no-order-img"></image>
 		<view class="text">没有定时任务</view>
-		<view  class="to-index-btn" bindtap="toMyHomePage">
-			返回我的家
-		</view>
 	</view>
 
 	<view wx:else class="wrap">
