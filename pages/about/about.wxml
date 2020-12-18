@@ -1,0 +1,14 @@
+<view class="container">
+    <view class='about-wrap'>
+        <view class='title'>家务小本本</view>
+        <view class='content'>
+            为解决某人"我不记得我说过周六我来拖地所以我们还是猜拳吧"引起家庭矛盾的问题开发.
+        </view>
+        <view class="line"></view>
+        <view class="content">开发者：ObserverYu</view>
+        <view class="content">微信:wanyuyichen</view>
+        <view class="content">github:https://github.com/ObserverYu</view>
+        <view class="line"></view>
+        <view class="content">感谢: 海风小店,NideShop 开源前端代码</view>
+    </view>
+</view>

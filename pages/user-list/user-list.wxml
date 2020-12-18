@@ -1,7 +1,7 @@
 <view class="container">
     <view class='has-info' wx:if="{{users.length > 0}}">
         <view bindtap="goUserDetail"  class='info-item' data-userid="{{item.id}}" wx:for="{{users}}" wx:key="id">
-            <view class="info-wrap">
+            <view class="info-wrap" >
                 <view class="addr">
                     <view class="top">{{item.nickName}}</view>
                     <!-- <view class="text">{{item.full_region}}</view> -->
@@ -13,7 +13,7 @@
                 </view>
                 
             </view>
-            <view class="edit-wrap" data-addressid="{{item.id}}" catchtap='goUserDetail'>
+            <view class="edit-wrap">
                 <image class="img" src="{{item.avatar}}"></image>
             </view>
         </view>

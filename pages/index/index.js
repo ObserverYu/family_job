@@ -175,6 +175,12 @@ Page({
         }
     }, 
 
+    toAbout: function () {
+        wx.navigateTo({
+            url: '/pages/about/about',
+        });
+    },
+
     checkSendMsg:function(templateId){
         console.info("开始鉴别")
         let settings = wx.getStorageSync('settings');

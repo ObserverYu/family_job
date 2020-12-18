@@ -63,7 +63,7 @@
                 <image class="img" src="/images/icon/new/huiyuan.png"></image>
             </view>
             <view class="input-wrap">
-                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputPoints"  placeholder="完成可获得家务的点数,从发布人处扣除"  value="{{points}}"></input>
+                <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputPoints"  placeholder="输入悬赏家务点(当前可用:{{myPoints}})"  value="{{points}}"></input>
                 <input wx:else cursor-spacing='100' class='a-input' disabled="true" type='number'  value="完成获得家务点: {{points}}"></input>   
             </view>
         </view>

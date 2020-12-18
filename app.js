@@ -1,11 +1,24 @@
 var util = require('utils/util.js');
 var api = require('config/api.js');
+var template = require('config/template.js');
 App({
     data: {
         deviceInfo: {}
     },
     onLaunch: function() {
         this.data.deviceInfo = wx.getSystemInfoSync();
+        // 动态设置模板id
+        wx.request({
+          url: api.GetTemplateId,
+          success(res){
+            console.info(res)
+            if(res.data.code == 200){
+                template.setTemplate(res.data.data.templateId);
+            }
+            console.info(template.RENWUTIXING);
+          }
+        })
+
        // console.log(this.data.deviceInfo);
         // 展示本地存储能力
         var logs = wx.getStorageSync('logs') || []

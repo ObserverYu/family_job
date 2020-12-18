@@ -1,6 +1,7 @@
 var util = require('../../../utils/util.js');
 var api = require('../../../config/api.js');
 var user = require('../../../services/user.js');
+const template = require('../../../config/template.js');
 const app = getApp()
 
 Page({
@@ -55,6 +56,7 @@ Page({
     goProfile: function (e) {
         let res = util.loginNow();
         if (res == true) {
+            user.refreshUserInfo();
             wx.navigateTo({
                 url: '/pages/ucenter/settings/settings',
             });
@@ -64,6 +66,7 @@ Page({
     toJobListTap: function(event) {
         let res = util.loginNow();
         if (res == true) {
+            user.checkSendMsgReal(template.RENWUTIXING);
             let isminejob = event.currentTarget.dataset.isminejob;
             let state = event.currentTarget.dataset.state;
             wx.navigateTo({

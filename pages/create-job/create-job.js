@@ -33,6 +33,7 @@ Page({
         ,allTypeStr:''
         ,createTypeStr:''
         ,cronTypeStr:''
+        ,myPoints:0
     },
 
     bindinputRemark(event) {
@@ -82,6 +83,7 @@ Page({
                 ,creatorNickName: userInfo.nickName,
                 creatorId: userInfo.id,
                 creatorAvatar:userInfo.avatar,
+                myPoints:userInfo.points,
                 nowDate :tomorrow.toLocaleDateString()});   
 
             // 构造家务多列选择器  
@@ -240,8 +242,13 @@ Page({
         let costStep = this.data.costStep;
         let remark = this.data.remark;
         let points = this.data.points;
+        let myPoints = this.data.myPoints;
         if(points == null){
             util.showErrorToast('请输入家务点');
+            return false;
+        }
+        if(points > myPoints){
+            util.showErrorToast('您当前的家务点数不足');
             return false;
         }
         if(multiIndex.length < 2){

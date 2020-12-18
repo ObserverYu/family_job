@@ -1,6 +1,6 @@
 <view class="container">
 
-    <view class='status-wrap' bindtap='clearTimer'>
+    <view class='status-wrap' >
 		<view class='status-text'>
             <image class='icon to-pay' src="/images/icon/new/huiyuan.png"></image>
 			<view class='text'>当前家务点数: {{points}}</view>
@@ -26,7 +26,7 @@
                 <image class="img" src="/images/icon/new/shijian.png"></image>
             </view>
             <view class="input-wrap">
-                <input class='a-input'  value="创建时间: {{createTime}}" ></input>
+                <input class='a-input' disabled="true"  value="创建时间: {{createTime}}" ></input>
             </view>
         </view>
 
@@ -35,7 +35,14 @@
                 <image class="img" src="/images/icon/new/geren.png"></image>
             </view>
             <view class="input-wrap">
-                <input class='a-input' bindtap="copyTBL"  value="邀请码(点击复制): {{inviteCode||''}}" ></input>
+                <input class='a-input' disabled="true" bindtap="copyTBL"  value="邀请码(点击复制): {{inviteCode||''}}" ></input>
+            </view>
+        </view>
+
+        <view class="a-item">
+            <view class="default-wrap">
+            <view class="text">任务通知开关</view>
+                <switch class="switch"  checked="{{canSend != 2 ? true:false}}" bindchange="switchChange"></switch>
             </view>
         </view>
 

@@ -84,9 +84,19 @@
         <view class="list" bindtap="toStatisticsPage">
             <view class="list-l">
                 <view class="icon">
-                    <image class="img" src="/images/icon/icon-tongji.png"></image>
+                    <image class="img" src="/images/icon/new/tongji.png"></image>
                 </view>
                 <view class="text">家务统计</view>
+            </view>
+            <view class="arrow"></view>
+        </view>
+
+        <view class="list" bindtap="toAbout">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/icon-about-r.png"></image>
+                </view>
+                <view class="text">关于</view>
             </view>
             <view class="arrow"></view>
         </view>

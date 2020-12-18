@@ -1,4 +1,10 @@
+var RENWUTIXING;
+
+function setTemplate(code){
+    this.RENWUTIXING = code;
+}
 module.exports = {
+    setTemplate,
     // 完成任务提醒
-    RENWUTIXING:'DuX9yog3-u0VxQ27zFBzF5ASiAytHhhrQESGylKYzCg'
+    RENWUTIXING
 };

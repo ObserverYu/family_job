@@ -2,6 +2,7 @@
 const ApiRootUrl = 'https://family.lovejiangbaby.cn/';
 
 module.exports = {
+    GetTemplateId: ApiRootUrl + 'data-dict/getTemplateId', //动态获取通知模板id
     // 个人
     AuthLoginByWeixin: ApiRootUrl + 'user/loginByWeixin', //微信登录
     GetUsers: ApiRootUrl + 'user/userList',
