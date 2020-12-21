@@ -1,0 +1,29 @@
+<view class="container">
+
+	<view class="no-order {{typeList.length <= 0? 'show':'' }}" hidden="" wx:if="{{typeList.length <= 0}}">
+		<image src="/images/icon/no-order.png" class="no-order-img"></image>
+		<view class="text">没有定自定义任务</view>
+	</view>
+
+	<view wx:else class="wrap">
+		<!--  待付款  -->
+		<view bindtap='toCustomizedJobList' class='order-list-wrap' data-id="{{item.id}}" wx:for="{{typeList}}" wx:key="id">
+
+			<view class='list-top-wrap'>
+				<view class='time'>{{item.name}}</view>
+				<view class='status'>
+					<view class="order-status">{{item.count}}个自定义项</view>
+				</view>
+			</view>
+		</view>
+
+		<view wx:if="{{showTips}}" class="no-more-goods">没有更多啦</view>
+	</view>
+
+	<view class="cart-add-box" wx:if="{{familyOwner == 1}}">
+        <block  bindtap="toCreatePage">
+            <view class="cart-empty" bindtap="toCreatePage">新增自定义家务</view>
+        </block>
+	</view>
+
+</view>

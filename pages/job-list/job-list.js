@@ -1,5 +1,7 @@
 var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
+const user = require('../../services/user.js');
+const template = require('../../config/template.js');
 const app = getApp()
 // 触底上拉刷新 TODO 这里要将page传给服务器，作者没写
 Page({
@@ -21,11 +23,15 @@ Page({
     },
 
     toJobDetails: function(e) {
-        let jobUserId = e.currentTarget.dataset.id;
-        let userRole = this.data.isMineJob == 0 ? 1:0;
-        wx.navigateTo({
-            url: '/pages/create-job/create-job?isCreate=0'+'&userRole='+userRole+'&id='+jobUserId
-        })
+        let login = util.loginNow();
+        if(login){
+            user.checkSendMsgReal(template.RENWUTIXING);
+            let jobUserId = e.currentTarget.dataset.id;
+            let userRole = this.data.isMineJob == 0 ? 1:0;
+            wx.navigateTo({
+                url: '/pages/create-job/create-job?isCreate=0'+'&userRole='+userRole+'&id='+jobUserId
+            })
+        }
     },
 
     jobCount: function(e) {
@@ -88,6 +94,16 @@ Page({
             this.getJobList();
             this.jobCount();
         }
+        let isMineJob = this.data.isMineJob;
+        let title = '家务列表';
+        if(isMineJob == 1){
+            title = "家务列表(我收到的)"
+        }else{
+            title = "家务列表(我监督的)"
+        }
+        wx.setNavigationBarTitle({
+            title: title
+        })
         
     },
 

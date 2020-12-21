@@ -11,11 +11,9 @@ App({
         wx.request({
           url: api.GetTemplateId,
           success(res){
-            console.info(res)
             if(res.data.code == 200){
-                template.setTemplate(res.data.data.templateId);
+                template.setTemplate(res.data.data);
             }
-            console.info(template.RENWUTIXING);
           }
         })
 

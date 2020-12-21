@@ -86,7 +86,7 @@
             </view>
             <view class="input-wrap">
                 <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' bindinput="bindinputRemark"  placeholder="{{isCreate == 1 ? '输入备注(可选)':'无'}}"  value="{{remark}}"></input>
-                <input wx:else cursor-spacing='100' class='a-input' disabled="true"   value="备注:{{remark == '' || remark == null ? '' : remark}}"></input>
+                <input wx:else cursor-spacing='100' class='a-input' disabled="true"   value="备注:{{remark == '' || remark == null ? '无' : remark}}"></input>
             </view>
         </view>
 

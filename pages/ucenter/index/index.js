@@ -78,6 +78,7 @@ Page({
     toUserList: function(e) {
         let res = util.loginNow();
         if (res == true) {
+            user.checkSendMsgReal(template.RENWUTIXING);
             wx.navigateTo({
                 url: '/pages/user-list/user-list?type=0',
             });

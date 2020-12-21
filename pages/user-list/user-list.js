@@ -31,7 +31,7 @@ Page({
                 select = 0;
                 selectToCron = 1;
             }
-            console.info("list:"+select+"    "+canDelete)
+            //console.info("list:"+select+"    "+canDelete)
             wx.navigateTo({
                 url: '/pages/user-detail/user-detail?select='+select+'&canDelete='+canDelete+'&id=' + id + "&selectToCron=" + selectToCron,
             })

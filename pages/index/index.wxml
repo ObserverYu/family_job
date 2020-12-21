@@ -91,6 +91,26 @@
             <view class="arrow"></view>
         </view>
 
+        <view class="list" bindtap="toCustomizedJobList">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/new/zidingyi.png"></image>
+                </view>
+                <view class="text">自定义家务项</view>
+            </view>
+            <view class="arrow"></view>
+        </view>
+
+        <view class="list" bindtap="toStatisticsPage">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/new/zuanshi.png"></image>
+                </view>
+                <view class="text">领取额外家务</view>
+            </view>
+            <view class="arrow"></view>
+        </view>
+
         <view class="list" bindtap="toAbout">
             <view class="list-l">
                 <view class="icon">

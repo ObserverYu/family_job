@@ -49,7 +49,7 @@ Page({
             pageSize: that.data.pageSize,
             pageNum: that.data.pageNum
         }).then(function(res) {
-            console.info(res)
+            //console.info(res)
             if (res.code === 200) {
                 if(res.data == null || res.data == ''){
                     return true;

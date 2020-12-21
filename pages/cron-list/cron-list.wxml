@@ -49,7 +49,9 @@
 			</view>
 
 		</view>
+		<view wx:if="{{showTips}}" class="no-more-goods">----</view>
 		<view wx:if="{{showTips}}" class="no-more-goods">没有更多啦</view>
+		<view wx:if="{{showTips}}" class="no-more-goods">----</view>
 	</view>
 
 	<view class="cart-add-box" wx:if="{{familyOwner == 1}}">

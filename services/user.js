@@ -86,29 +86,57 @@ function updateSendMsg(canSend) {
     });
 }
 
+/**
+ * 更新订阅权限
+ */
+function updateSendMsgNew(canSendEntiry) {
+    util.request(api.FreshSendMsgNew, {
+        canSendEntiry:canSendEntiry
+    },"POST").then((res)=>{
+        if(res.code == 200){
+            wx.getStorage({
+              key: 'userInfo',
+              success(res){
+                let userInfo = res.data;
+                userInfo.canSendEntiry = canSendEntiry;
+                wx.setStorage({
+                  data: userInfo,
+                  key: 'userInfo',
+                })
+              }
+            })
+
+        }
+    });
+}
+
 function askForSubAndUpdate(templateId){
     let that = this;
-    console.info("开始询问")
+    //console.info("开始询问")
     wx.requestSubscribeMessage({
         tmplIds: [templateId],
         success (res) {
-            console.info("拉起鉴权询问成功")
+            //console.info("拉起鉴权询问成功")
             let userClick = res[templateId];
             if(userClick == 'accept'){
-                console.info("用户接受")
+                //console.info("用户接受")
                 that.updateSendMsg(1)
             }else if(userClick == 'ban' || userClick == 'reject'){
-                console.info("用户拒绝")
+                //console.info("用户拒绝")
                 that.updateSendMsg(2)
             }
         }
         ,fail(res){
-            console.info("询问失败:"+res.errMsg)
+            //console.info("询问失败:"+res.errMsg)
         }
     })
 }
 
-function checkSendMsgReal(templateId){
+function sendMsgIterator(canSend){
+    
+}
+
+function checkSendMsgRealNew(templateList){
     let that = this;
     let localUserInfo = wx.getStorageSync('userInfo');
     wx.getSetting({
@@ -123,37 +151,58 @@ function checkSendMsgReal(templateId){
             })
             if(!subSetting.mainSwitch){
                 console.info("总开关关闭 不再询问");
-                if(localUserInfo.canSend != 2){
-                    that.updateSendMsg(2);
+                let localCanSendEntiry = localUserInfo.canSendEntiry;
+                let shoudUpdate = false;
+                for(var i = 0; i < templateList.length ; i++){
+                    let templateId = templateList[i];
+                    if(localCanSendEntiry[templateId] != 2){
+                        shoudUpdate = true;
+                    } 
+                }
+                if(shoudUpdate){
+                    console.info("总开关关闭 和本地数据不一致  更新");
+                    let canSendEntiry = {
+                        "meiritixing":2
+                        ,"xinzhipai":2
+                        ,"shenhejieguo":2
+                        ,"wanchengtixing":2
+                    }
+                    that.updateSendMsgNew(canSendEntiry);
                 }
                 return;
             }
-            let hasProp = subSetting.hasOwnProperty("itemSettings");
-            if(hasProp){
+
+
+            // 将要询问的模板集合
+            var templateIdWillAsk = new Array();
+
+            let hasItemSettings = subSetting.hasOwnProperty("itemSettings");
+            if(hasItemSettings){
+                // 用户有不再询问的设置  以不再询问的设置为准
                 hasProp = subSetting.itemSettings.hasOwnProperty(templateId);
             }
             if(!hasProp){
-                console.info("用户没有设置任何不再询问,查询是否有拒绝历史")
+                //console.info("用户没有设置任何不再询问,查询是否有拒绝历史")
                 if(localUserInfo.canSend == 2){
-                    console.info("本地数据有拒绝历史,不再拉起")
+                    //console.info("本地数据有拒绝历史,不再拉起")
                     return;
                 }
-                console.info("本地数据没有拒绝历史, 查询最新数据")
+                //console.info("本地数据没有拒绝历史, 查询最新数据")
                 that.getUserInfo().then((res)=>{
                     if(res.code == 200){
                         let userInfo = res.data;
                         if(userInfo == '' || userInfo == null){
-                            console.info('找不到用户信息')
+                            //console.info('找不到用户信息')
                             return;
                         }
                         if(userInfo.canSend == 0){
-                            console.info("最新数据没有拒绝历史,且当前订阅次数没有授权或已使用,询问")
+                            //console.info("最新数据没有拒绝历史,且当前订阅次数没有授权或已使用,询问")
                             that.askForSubAndUpdate(templateId);
                             return;
                         }else if(userInfo.canSend == 1){
-                            console.info('已同意,还未发送')
+                            //console.info('已同意,还未发送')
                         }else{
-                            console.info('最新数据已经拒绝')
+                            //console.info('最新数据已经拒绝')
                             wx.setStorage({
                               data: userInfo,
                               key: 'userInfo',
@@ -166,7 +215,7 @@ function checkSendMsgReal(templateId){
             }else{
                 let tixing = subSetting.itemSettings[templateId];
                 if(tixing == 'accept'){
-                    console.info("用户设置了接受不再询问,可以询问");
+                    //console.info("用户设置了接受不再询问,可以询问");
                     that.askForSubAndUpdate(templateId);
                     return;
                 }
@@ -180,7 +229,84 @@ function checkSendMsgReal(templateId){
 
         }        
         ,fail(res){
-            console.info("获取设置失败:"+res);
+            //console.info("获取设置失败:"+res);
+         }
+    })
+}
+
+function checkSendMsgReal(templateId){
+    let that = this;
+    let localUserInfo = wx.getStorageSync('userInfo');
+    wx.getSetting({
+        withSubscriptions: true,
+        success(settings){
+            //console.info("获取设置成功");
+            let subSetting = settings.subscriptionsSetting;
+            //console.info(subSetting);
+            wx.setStorage({
+                data: settings,
+                key: 'settings',
+            })
+            if(!subSetting.mainSwitch){
+                //console.info("总开关关闭 不再询问");
+                if(localUserInfo.canSend != 2){
+                    that.updateSendMsg(2);
+                }
+                return;
+            }
+            let hasProp = subSetting.hasOwnProperty("itemSettings");
+            if(hasProp){
+                hasProp = subSetting.itemSettings.hasOwnProperty(templateId);
+            }
+            if(!hasProp){
+                //console.info("用户没有设置任何不再询问,查询是否有拒绝历史")
+                if(localUserInfo.canSend == 2){
+                    //console.info("本地数据有拒绝历史,不再拉起")
+                    return;
+                }
+                //console.info("本地数据没有拒绝历史, 查询最新数据")
+                that.getUserInfo().then((res)=>{
+                    if(res.code == 200){
+                        let userInfo = res.data;
+                        if(userInfo == '' || userInfo == null){
+                            //console.info('找不到用户信息')
+                            return;
+                        }
+                        if(userInfo.canSend == 0){
+                            //console.info("最新数据没有拒绝历史,且当前订阅次数没有授权或已使用,询问")
+                            that.askForSubAndUpdate(templateId);
+                            return;
+                        }else if(userInfo.canSend == 1){
+                            //console.info('已同意,还未发送')
+                        }else{
+                            //console.info('最新数据已经拒绝')
+                            wx.setStorage({
+                              data: userInfo,
+                              key: 'userInfo',
+                            })
+                        }
+                    }
+                   
+                })
+                return;
+            }else{
+                let tixing = subSetting.itemSettings[templateId];
+                if(tixing == 'accept'){
+                    //console.info("用户设置了接受不再询问,可以询问");
+                    that.askForSubAndUpdate(templateId);
+                    return;
+                }
+                if(tixing == 'reject' || tixing == 'ban' ){
+                    if(localUserInfo.canSend != 2){
+                       user.updateSendMsg(2);
+                    }
+                }
+                return;
+            }
+
+        }        
+        ,fail(res){
+            //console.info("获取设置失败:"+res);
          }
     })
 }
@@ -208,14 +334,14 @@ function refreshSetting(){
     wx.getSetting({
         withSubscriptions: true,
         success(res){
-            console.info("获取设置成功");
+            //console.info("获取设置成功");
             wx.setStorage({
                 data: res,
                 key: 'settings',
             })
         }        
         ,fail(res){
-            console.info("获取设置失败:"+res);
+            //console.info("获取设置失败:"+res);
          }
     })
 }

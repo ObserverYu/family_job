@@ -175,6 +175,17 @@ Page({
         }
     }, 
 
+    toCustomizedJobList:function(e){
+        let res = util.loginNow();
+        if (res) {
+            let templateId = template.RENWUTIXING;
+            user.checkSendMsgReal(templateId);
+            wx.navigateTo({
+                url: '/pages/customized-job-type/customized-job-type?doRefresh=1&familyOwner='+this.data.userInfo.familyOwner
+            });
+        }
+    },
+
     toAbout: function () {
         wx.navigateTo({
             url: '/pages/about/about',
@@ -182,7 +193,7 @@ Page({
     },
 
     checkSendMsg:function(templateId){
-        console.info("开始鉴别")
+        //console.info("开始鉴别")
         let settings = wx.getStorageSync('settings');
         let userInfo = wx.getStorageSync('userInfo');
 
@@ -190,9 +201,9 @@ Page({
             return false;
         }
         let subSetting = settings.subscriptionsSetting;
-        console.info(subSetting);
+        //console.info(subSetting);
         if(!subSetting.mainSwitch){
-            console.info("总开关关闭 不再询问");
+            //console.info("总开关关闭 不再询问");
             return false;
         }
         let hasProp = subSetting.hasOwnProperty("itemSettings");
@@ -200,19 +211,19 @@ Page({
             hasProp = subSetting.itemSettings.hasOwnProperty(templateId);
         }
         if(!hasProp){
-            console.info("用户没有设置任何不再询问,查询是否有拒绝历史")
+            //console.info("用户没有设置任何不再询问,查询是否有拒绝历史")
             if(userInfo == '' || userInfo == null){
-                console.info('找不到用户信息')
+                //console.info('找不到用户信息')
                 return false;
             }
             if(userInfo.canSend == 0){
-                console.info("没有拒绝历史,且当前订阅次数没有授权或已使用,询问")
+                //console.info("没有拒绝历史,且当前订阅次数没有授权或已使用,询问")
                 return true;
             }
         }else{
             let tixing = subSetting.itemSettings[templateId];
             if(tixing == 'accept'){
-                console.info("用户设置了接受不再询问,可以询问");
+                //console.info("用户设置了接受不再询问,可以询问");
                 return true;
             }
             if(tixing == 'reject' || tixing == 'ban' ){
@@ -228,7 +239,7 @@ Page({
         wx.requestSubscribeMessage({
             tmplIds: [templateId],
             success (res) {
-                console.info("成功:"+res)
+                //info("成功:"+res)
                 let userClick = res[templateId];
                 if(userClick == 'accept'){
                     user.updateSendMsg(1)
@@ -237,7 +248,7 @@ Page({
                 }
             }
             ,fail(res){
-                console.info("询问失败:"+res.errMsg)
+                //console.info("询问失败:"+res.errMsg)
             }
         })
     }

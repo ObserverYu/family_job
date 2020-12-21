@@ -1,0 +1,33 @@
+<view class="container">
+    
+    <view class='edit-container'>
+
+        <view class="a-item">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/liebiao.png"></image>
+            </view>
+            <view class="input-wrap">
+                <picker bindchange="bindTypeChange"  range="{{jobTypeArray}}" range-key='name'>
+                        <input cursor-spacing='100' class='a-input' placeholder="点击选择类型" disabled="true" value="{{chosenTypeName}}"></input>
+                </picker>
+            </view>
+        </view>
+
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/zidingyi.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input  cursor-spacing='100' class='a-input' bindinput="bindinputName"  placeholder="请输入项目名"  value="{{jobName}}"></input>
+            </view>
+        </view>
+
+    </view>
+
+    
+    <view class="cart-add-box">
+        <block  bindtap="saveCronJob">
+            <view class="cart-empty" bindtap="saveCronJob">创建</view>
+        </block>
+    </view>
+</view>

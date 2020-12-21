@@ -108,7 +108,7 @@ Page({
                 util.request(api.CronJobDetail,{
                     cronJobId:cronJobId
                 }).then(function(res) {
-                    console.info(res)
+                    //console.info(res)
                     if (res.code === 200) {
                         that.refreshCronJob(res,isCreate,familyOwner);
                     }else{

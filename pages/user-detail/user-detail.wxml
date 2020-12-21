@@ -32,6 +32,15 @@
             </view>
         </view>
 
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/huiyuan.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input class='a-input' disabled="true" type='number'  value="当前家务点: {{userInfo.points}}"></input>
+            </view>
+        </view>
+
         <view class="a-item">
             <view class="icon">
                 <image class="img" src="/images/icon/new/shijian.png"></image>
