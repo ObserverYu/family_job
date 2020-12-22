@@ -60,8 +60,12 @@
     <view class='btn-wrap'  wx:if="{{edit == 1}}" bindtap="saveUser">
         <view class="btn active">保存</view>
     </view>
+    <view class='btn-wrap'  wx:if="{{changeWatchdog == 1}}" bindtap="changeWatchdog">
+        <view class="btn active">设为监督人</view>
+    </view>
     <view class='delete-wrap'  wx:if="{{canDelete == 1}}" bindtap="deleteUser">
         <view class="btn active">移出家庭</view>
     </view>
+
    
 </view>

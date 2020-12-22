@@ -41,6 +41,20 @@
         <view class='btn-go-order' bindtap="toMyHomePage">返回我的家</view>
     </view>
 
+    <view wx:elif="{{status == 4}}" class="result-wrap">
+        <view class='image-wrap'>
+            <image src="/images/icon/pay-success.png" class="success-img"></image>
+        </view>
+        <view class='text-wrap'>
+            <view class="success-text">领取额外任务成功</view>
+            <view class="success-text">监督人确认完成后可获得额外家务点</view>
+        </view>
+        <view class="to-order-btn"  bindtap="toReceiveJobUserPage">
+            继续领取
+        </view>
+        <view class='btn-go-order' bindtap="toMyHomePage">返回我的家</view>
+    </view>
+
     <view wx:else class="result-wrap">
         <view class='image-wrap'>
             <image src="/images/icon/pay-error.png" class="success-img"></image>

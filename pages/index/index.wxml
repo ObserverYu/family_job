@@ -101,7 +101,7 @@
             <view class="arrow"></view>
         </view>
 
-        <view class="list" bindtap="toStatisticsPage">
+        <view class="list" bindtap="toReceiveJobUserPage">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/new/zuanshi.png"></image>

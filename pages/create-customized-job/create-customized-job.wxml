@@ -22,6 +22,15 @@
             </view>
         </view>
 
+        <view class="a-item" >
+            <view class="icon">
+                <image class="img" src="/images/icon/new/zuanshi.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input cursor-spacing='100' class='a-input' type='number' bindinput="bindinputPoints"  placeholder="作为额外家务获得家务点"  value="{{points}}"></input>
+            </view>
+        </view>
+
     </view>
 
     

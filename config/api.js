@@ -1,5 +1,5 @@
-const ApiRootUrl = 'http://localhost:9410/';
-//const ApiRootUrl = 'https://family.lovejiangbaby.cn/';
+//const ApiRootUrl = 'http://localhost:9410/';
+const ApiRootUrl = 'https://family.lovejiangbaby.cn/';
 
 module.exports = {
     GetTemplateId: ApiRootUrl + 'data-dict/getTemplateId', //动态获取通知模板id
@@ -11,6 +11,7 @@ module.exports = {
     FreshSendMsgNew:ApiRootUrl + 'user/freshSendMsgNew',
     HomePageInfo:ApiRootUrl + 'user/homePageInfo',
     GetMyUserInfo:ApiRootUrl + 'user/getMyUserInfo',
+    ChangeWatchdog:ApiRootUrl + 'user/changeWatchdog',
     // 家务
     JobCountInfo: ApiRootUrl + 'job/jobCount', // 我的页面获取家务数据
     ListAllJobType: ApiRootUrl + 'job/listAllType', //所有家务类别
@@ -27,6 +28,7 @@ module.exports = {
     DeleteCustomizedJob: ApiRootUrl + 'job/deleteCustomizedJob', // 删除自定义家务
     CreateCustomizedJob: ApiRootUrl + 'job/createCustomizedJob', // 新增自定义家务
     ListAllType: ApiRootUrl + 'job/listAllType', // 所有类别列表
+    ReceiveJobUser: ApiRootUrl + 'job/receiveJobUser', // 所有类别列表
     
     // 家庭
     CreateFamily:ApiRootUrl + 'family/createFamily',

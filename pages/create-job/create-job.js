@@ -34,6 +34,7 @@ Page({
         ,createTypeStr:''
         ,cronTypeStr:''
         ,myPoints:0
+        ,exPoints:0
     },
 
     bindinputRemark(event) {
@@ -98,6 +99,35 @@ Page({
                     })
                 }
             });
+        }else if (isCreate == 2){
+             // 领取任务页面
+             var tomorrow = new Date();
+             tomorrow.setTime(tomorrow.getTime()+24*60*60*1000);
+             this.setData({
+                userAvatar:userInfo.avatar
+                ,userId:userInfo.id
+                ,userNickName:userInfo.nickName
+                 ,isCreate : isCreate
+                 ,userRole:userRole
+                 ,creatorNickName: userInfo.watchdogName,
+                 creatorId: userInfo.watchdogId,
+                 creatorAvatar:userInfo.watchdogAvatar,
+                 myPoints:userInfo.points,
+                 nowDate :tomorrow.toLocaleDateString()});   
+ 
+             // 构造家务多列选择器  
+             util.request(api.ListAllJobTypeAndInfo).then(function(res) {
+                 if (res.code === 200) {
+                     that.initMuitlSelect(res.data);
+                 }else{
+                     wx.showToast({
+                         title: res.message,
+                         icon: 'none',
+                         duration: 2000
+                     })
+                 }
+             });
+
         }else{
             let jobUserId = options.id;
             if(jobUserId > 0){
@@ -176,7 +206,8 @@ Page({
         this.setData({
            multiIndex: e.detail.value,
            chosenJobName: this.data.multiArray[1][e.detail.value[1]],
-           chosenJobId: this.data.objectMultiShow[1][e.detail.value[1]].id
+           chosenJobId: this.data.objectMultiShow[1][e.detail.value[1]].id,
+           exPoints: this.data.objectMultiShow[1][e.detail.value[1]].points
         })
     },
 
@@ -232,6 +263,44 @@ Page({
     onUnload: function() {
         // 页面关闭
 
+    },
+
+    receiveJobUser(e) {
+        let date = this.data.date;
+        let remark = this.data.remark;
+        let jobId = this.data.chosenJobId;
+        if(jobId == null || jobId <= 0){
+            util.showErrorToast('请选择任务');
+            return false;
+        }
+        if(date == null || date == ''){
+            util.showErrorToast('请选择过期时间');
+            return false;
+        }
+        let param = {
+            jobId : jobId,
+            expireTime : date,
+            desc : remark
+        }
+        wx.showLoading({
+            title: '提交中',
+            mask:true
+          })
+        util.request(api.ReceiveJobUser, param, 'POST')
+        .then(function(res) {
+            wx.hideLoading()
+            if (res.code === 200) {
+                wx.reLaunch({
+                  url: '../success-page/success-page?status=4',
+                })
+            }else{
+                wx.showToast({
+                    title: res.message,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        });
     },
 
     saveJobUser(e) {

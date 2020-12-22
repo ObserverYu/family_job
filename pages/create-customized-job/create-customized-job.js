@@ -6,7 +6,8 @@ Page({
         jobTypeArray:[],
         chosenTypeName:'',
         chosenTypeId:-1,
-        jobName:''
+        jobName:'',
+        points:null
     },
 
     onLoad: function(options) {
@@ -46,6 +47,13 @@ Page({
 
     },
 
+    bindinputPoints(event) {
+        var points = event.detail.value.replace(/^(0+)|[^\d]+/g,'');
+        this.setData({
+            points:points
+        });
+    },
+
     bindTypeChange:function(e){
         let index = e.detail.value;
         this.setData({
@@ -65,12 +73,17 @@ Page({
     saveCronJob() {
         let jobName = this.data.jobName;
         let chosenTypeId = this.data.chosenTypeId;
+        let points = this.data.points;
         if(chosenTypeId <= 0){
             util.showErrorToast('请选择家务类别');
             return false;
         }
         if(jobName == null || jobName == ''){
             util.showErrorToast('请输入家务名');
+            return false;
+        }
+        if(points == null || points < 0){
+            util.showErrorToast('请输入作为额外任务时获得的家务点数');
             return false;
         }
         wx.showLoading({
@@ -80,6 +93,7 @@ Page({
         util.request(api.CreateCustomizedJob,{
             typeId:chosenTypeId
             ,jobName:jobName
+            ,points:points
         } ,'POST')
         .then(function(res) {
             wx.hideLoading()

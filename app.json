@@ -13,7 +13,10 @@
       "pages/cron-list/cron-list",
       "pages/ucenter/settings/settings",
       "pages/user-list/user-list",
-      "pages/user-detail/user-detail"
+      "pages/user-detail/user-detail",
+      "pages/create-customized-job/create-customized-job",
+      "pages/customized-job-list/customized-job-list",
+      "pages/customized-job-type/customized-job-type"
 
   ],
   "style": "v2",

@@ -159,6 +159,26 @@ Page({
         })
     },
 
+    toReceiveJobUserPage:function(e){
+        let res = util.loginNow();
+        if (res) {
+            let userInfo = wx.getStorageSync('userInfo');
+            let watchdogId = userInfo.watchdogId;
+            if(watchdogId == null || watchdogId == 0){
+                wx.showToast({
+                    title: "您还未设置监督人",
+                    icon: 'none',
+                    duration: 1000
+                })
+                return;
+            }
+            user.checkSendMsgReal(template.RENWUTIXING);
+            wx.navigateTo({
+                url: '/pages/create-job/create-job?isCreate='+2+'&userRole=0'
+            });
+        }
+    },
+
     toCronJob: function(e) {
         let res = util.loginNow();
         if (res) {

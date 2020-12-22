@@ -8,19 +8,31 @@ Page({
         canDelete:0,
         edit:0,
         select:0,
-        selectToCron:0
+        selectToCron:0,
+        changeWatchdog:0
     },
     
     onLoad: function(options) {
-        // 页面初始化 options为页面跳转所带来的参数
-        if (options.id) {
-            this.getUserDetail(options.id,options);
-        }else{
-            this.setData({
-                canDelete: options.canDelete,
-                select:options.select,
-                selectToCron:options.selectToCron
-            });
+        let login = util.loginNow();
+        if(login){
+            let userInfo = wx.getStorageSync('userInfo');
+            if(userInfo.id == options.id){
+                options.canDelete = 0;
+                options.changeWatchdog = 0;
+            }else if (userInfo.watchdogId == options.id){
+                options.changeWatchdog = 0;
+            }
+            // 页面初始化 options为页面跳转所带来的参数
+            if (options.id) {
+                this.getUserDetail(options.id,options);
+            }else{
+                this.setData({
+                    canDelete: options.canDelete,
+                    select:options.select,
+                    selectToCron:options.selectToCron,
+                    changeWatchdog:options.changeWatchdog
+                });
+            }
         }
     },
     
@@ -61,6 +73,28 @@ Page({
         })
     },
 
+    changeWatchdog:function(e){
+        let id = this.data.userId;
+        wx.showModal({
+            title: '提示',
+            content: '您确定要将该成员设置为监督人么？',
+            success: function(res) {
+                if (res.confirm) {
+                    util.request(api.ChangeWatchdog, {
+                        id: id
+                    }, 'POST').then(function(res) {
+                        if (res.code === 200) {
+                            util.showErrorToast('设置成功');
+                            wx.navigateBack();
+                        } else {
+                            util.showErrorToast(res.message);
+                        }
+                    });
+                }
+            }
+        })
+    },
+
     getUserDetail(id,options) {
         let res = util.loginNow();
         if(res){
@@ -74,7 +108,8 @@ Page({
                         userId:id
                         ,canDelete: options.canDelete,
                         select:options.select,
-                        selectToCron:options.selectToCron
+                        selectToCron:options.selectToCron,
+                        changeWatchdog:options.changeWatchdog
                     });
                     // console.info("顺便更新存储")
                     wx.getStorage({

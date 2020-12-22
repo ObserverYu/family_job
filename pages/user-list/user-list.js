@@ -12,6 +12,7 @@ Page({
         let select = 0;
         let canDelete = 0;
         let selectToCron = 0;
+        let changeWatchdog = 0;
         let login = util.loginNow();
         if(login){
             let user = wx.getStorageSync('userInfo');
@@ -27,13 +28,17 @@ Page({
                 select = 1;
             }else if(this.data.type == 1){
                 canDelete = 1;
+                changeWatchdog = 1;
+            }else if (this.data.type == 2){
+                changeWatchdog = 1;
             }else if (this.data.type == 3){
                 select = 0;
                 selectToCron = 1;
             }
             //console.info("list:"+select+"    "+canDelete)
             wx.navigateTo({
-                url: '/pages/user-detail/user-detail?select='+select+'&canDelete='+canDelete+'&id=' + id + "&selectToCron=" + selectToCron,
+                url: '/pages/user-detail/user-detail?select='+select
+                +'&canDelete='+canDelete+'&id=' + id + "&selectToCron=" + selectToCron + "&changeWatchdog="+changeWatchdog,
             })
         }
 
