@@ -118,9 +118,20 @@
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-post.png"></image>
                 </view>
-                <view class="text">发布指派任务</view>
+                <view class="text">发布指派家务</view>
             </view>
             <view class="arrow"></view>
         </view>
+
+        <view class="list" bindtap="toReceiveJobUserPage">
+            <view class="list-l">
+                <view class="icon">
+                    <image class="img" src="/images/icon/new/zuanshi.png"></image>
+                </view>
+                <view class="text">领取额外家务</view>
+            </view>
+            <view class="arrow"></view>
+        </view>
+        
     </view>
 </view>

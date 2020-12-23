@@ -16,7 +16,8 @@
       "pages/user-detail/user-detail",
       "pages/create-customized-job/create-customized-job",
       "pages/customized-job-list/customized-job-list",
-      "pages/customized-job-type/customized-job-type"
+      "pages/customized-job-type/customized-job-type",
+      "pages/statistics/statistics"
 
   ],
   "style": "v2",
@@ -36,6 +37,12 @@
     "borderStyle": "white",
     "backgroundColor": "#fff",
     "list": [
+      {
+        "pagePath": "pages/statistics/statistics",
+        "iconPath": "images/nav/icon-cate-off.png",
+        "selectedIconPath": "images/nav/icon-cate-on.png",
+        "text": "统计"
+    },
         {
             "pagePath": "pages/ucenter/index/index",
             "iconPath": "images/nav/icon-center-b.png",

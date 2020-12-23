@@ -152,11 +152,12 @@ Page({
     },
 
     toStatisticsPage: function(e) {
-        wx.showToast({
-            title: "开发中",
-            icon: 'none',
-            duration: 1000
-        })
+        let res = util.loginNow();
+        if (res) {
+            wx.navigateTo({
+                url: '/pages/statistics/statistics?type=1&time=1'
+            });
+        }
     },
 
     toReceiveJobUserPage:function(e){

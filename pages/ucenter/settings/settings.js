@@ -73,10 +73,10 @@ Page({
                     wx.requestSubscribeMessage({
                         tmplIds: [templateId],
                         success (res) {
-                            //console.info("拉起鉴权询问成功")
+                            console.info("拉起鉴权询问成功")
                             let userClick = res[templateId];
                             if(userClick == 'accept'){
-                                //console.info("用户接受")
+                                console.info("用户接受")
                                 that.setData({
                                     canSend : 1
                                 })
@@ -87,7 +87,7 @@ Page({
                                     duration: 1000
                                 })
                             }else if(userClick == 'ban' || userClick == 'reject'){
-                                //console.info("用户拒绝")
+                                console.info("用户拒绝")
                                 that.setData({
                                     canSend : 2
                                 })
@@ -100,7 +100,7 @@ Page({
                             }
                         }
                         ,fail(res){
-                            //console.info("询问失败:"+res.errMsg)
+                            console.info("询问失败:"+res.errMsg)
                         }
                     })
                 }

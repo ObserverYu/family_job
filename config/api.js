@@ -29,6 +29,7 @@ module.exports = {
     CreateCustomizedJob: ApiRootUrl + 'job/createCustomizedJob', // 新增自定义家务
     ListAllType: ApiRootUrl + 'job/listAllType', // 所有类别列表
     ReceiveJobUser: ApiRootUrl + 'job/receiveJobUser', // 所有类别列表
+    Statistics:ApiRootUrl + 'job/statistics', // 统计
     
     // 家庭
     CreateFamily:ApiRootUrl + 'family/createFamily',

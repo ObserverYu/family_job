@@ -1,0 +1,27 @@
+<view class="container">
+	<view class="tab-nav">
+
+		<view class="tab {{ time == 1 ? 'active' : ''}}" bindtap="switchTab" data-time='1'>
+			本周
+		</view>
+
+		<view class="tab {{ time == 2 ? 'active' : ''}}" bindtap="switchTab" data-time='2'>
+			本月
+		</view>
+
+		<view class="tab {{ time == 3 ? 'active' : ''}}" bindtap="switchTab" data-time='3'>
+			全部
+		</view>
+
+	</view>
+
+	<view class="catalog">
+        <scroll-view class="nav" scroll-y="true">
+            <view class="item {{ type == item.id?'active' : ''}}" wx:for="{{navList}}" wx:key="id" data-id="{{item.id}}" bindtap="switchCate">{{item.name}}</view>
+        </scroll-view>
+        <scroll-view scroll-y="true" class='cate'>
+						<ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ec }}"></ec-canvas>
+				</scroll-view>
+    </view>
+
+</view>
