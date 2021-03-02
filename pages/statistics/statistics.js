@@ -10,7 +10,7 @@ var chart = null;
 
 Page({
     data: {
-        navList:[{'name':'数量','id':'1'},{'name':'家务点','id':'2'},{'name':'项目','id':'3'}],
+        navList:[],
         type:1,
         time:1
         ,ec: {
@@ -33,46 +33,30 @@ Page({
             time:time
         });
         this.chartComponent = this.selectComponent('#mychart-dom-bar');
-        let login = util.loginNow()
-        if(login){
-            let userInfo = wx.getStorageSync('userInfo');
-            if(userInfo.familyId == null || userInfo.familyId == ''){
-                wx.showToast({
-                    title: "请先创建/加入家庭",
-                    icon: 'none',
-                    duration: 1000,
-                    mask:true
-                })
-                setTimeout(()=>{
-                    wx.switchTab({
-                      url: '/pages/index/index',
-                    })
-                },1000)
-            }else{
-                this.initChart();
-            }
+        let userInfo = wx.getStorageSync('userInfo');
+        if(userInfo == null || userInfo == '' || userInfo.familyId == null || userInfo.familyId == ''){
+            wx.showToast({
+                title: "请先创建/加入家庭",
+                icon: 'none',
+                duration: 1000,
+                mask:true
+            })
+            return;
+        }else{
+            this.initChart();
         }
+        
     },
 
     onShow: function() {
-        let login = util.loginNow()
-        if(login){
-            let userInfo = wx.getStorageSync('userInfo');
-            if(userInfo.familyId == null || userInfo.familyId == ''){
-                wx.showToast({
-                    title: "请先创建/加入家庭",
-                    icon: 'none',
-                    duration: 800,
-                    mask:true
-                })
-                setTimeout(()=>{
-                    wx.switchTab({
-                      url: '/pages/index/index',
-                    })
-                },800)
-            }else{
-                this.initChart();
-            }
+        let userInfo = wx.getStorageSync('userInfo');
+        if(userInfo == null || userInfo == '' || userInfo.familyId == null || userInfo.familyId == ''){
+            wx.showToast({
+                title: "请先创建/加入家庭",
+                icon: 'none',
+                duration: 800,
+                mask:true
+            })
         }
     },
 
@@ -91,17 +75,21 @@ Page({
                     data = res.data.showData;
                 }
                 //console.info(res);
-                that.chartComponent.init((canvas, width, height) => {
+                that.chartComponent.init((canvas, width, height,dpr) => {
                     // 初始化图表
                     const barChart = echarts.init(canvas, null, {
                         width: width,
-                        height: height
+                        height: height,
+                        devicePixelRatio: dpr // new
                     });
                     barChart.setOption(that.initChartOption(title,data));
                     chart = barChart;
                     // 注意这里一定要返回 chart 实例，否则会影响事件处理等
                     return barChart;
                 });
+                that.setData({
+                    navList:res.data.itemList
+                })
             }else{
                 wx.showToast({
                     title: res.message,
@@ -141,7 +129,7 @@ Page({
 
             tooltip: {
                 trigger: 'item',
-                formatter: '{a} {b} <br/>: {c} ({d}%)'
+                formatter: '{a}\n{b}: {c} ({d}%)'
                 ,position:['10%','10%']
             },
 
@@ -195,7 +183,7 @@ Page({
                     },
                     itemStyle: {
                         color: '#c23531',
-                        shadowBlur: 200,
+                        shadowBlur: 80,
                         shadowColor: 'rgba(0, 0, 0, 0.5)'
                     },
         

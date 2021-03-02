@@ -23,6 +23,7 @@ module.exports = {
     AcceptJobUser: ApiRootUrl + 'job/acceptJob', // 接受任务
     RefuseJobUser: ApiRootUrl + 'job/refuseJob', // 拒绝任务
     FinishJobUser: ApiRootUrl + 'job/finishJob', // 完成任务
+    FinishJobByStep: ApiRootUrl + 'job/finishJobByStep', // 通过步数完成任务
     GetCustomizedJobType: ApiRootUrl + 'job/getCustomizedJobType', // 获取家庭自定义家务类别
     GetCustomizedJobList: ApiRootUrl + 'job/getCustomizedJobList', // 获取家庭自定义家务列表
     DeleteCustomizedJob: ApiRootUrl + 'job/deleteCustomizedJob', // 删除自定义家务

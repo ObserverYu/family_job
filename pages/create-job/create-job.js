@@ -35,6 +35,7 @@ Page({
         ,cronTypeStr:''
         ,myPoints:0
         ,exPoints:0
+        ,stepFinish:0
     },
 
     bindinputRemark(event) {
@@ -53,6 +54,16 @@ Page({
     
     bindinputPoints(event) {
         var points = event.detail.value.replace(/^(0+)|[^\d]+/g,'');
+        if(this.data.isCreate == 1){
+            if(points > this.data.myPoints){
+                wx.showToast({
+                    title: "注意:您的家务点不足(剩余:"+this.data.myPoints+")",
+                    icon: 'none',
+                    duration: 800,
+                    mask:true
+                })
+            }
+        }
         this.setData({
             points: points
         });
@@ -175,6 +186,7 @@ Page({
             ,allTypeStr:res.data.allTypeStr
             ,createTypeStr:res.data.createTypeStr
             ,cronTypeStr:res.data.cronTypeStr
+            ,stepFinish:res.data.stepFinish
         });
 
     },
@@ -244,6 +256,13 @@ Page({
         let canStep = 0;
         if (status == true) {
             canStep = 1;
+            wx.showModal({
+                cancelColor: 'cancelColor',
+                showCancel:false,
+                title:'说明',
+                content:'若开启则可以通过前一日的微信步数进行抵扣完成',
+                confirmText:'知道了',
+            })
         }
         this.setData({
             canStep: canStep
@@ -352,6 +371,11 @@ Page({
         .then(function(res) {
             wx.hideLoading()
             if (res.code === 200) {
+                // 更新用户信息
+                wx.setStorage({
+                  data: res.data,
+                  key: 'userInfo',
+                })
                 wx.reLaunch({
                   url: '../success-page/success-page?status=1',
                 })
@@ -461,11 +485,128 @@ Page({
         });
     },
 
-    costStep:function(e){
-        wx.showToast({
-            title: "功能开发中",
-            icon: 'none',
-            duration: 2000
+    finishByStep:function(e){
+        let that = this;
+        let login = util.loginNow();
+        if(login){
+            wx.showModal({
+                showCancel:false,
+                title:'说明',
+                content:'抵扣使用的是昨日步数',
+                confirmText:'知道了',
+                success (res) {
+                    if (res.confirm) {
+                        that.costStep();
+                    }
+                }
+            })
+           
+        }
+    },
+
+    costStep:function(){
+        let that = this;
+        wx.getSetting({
+            withSubscriptions: false,
+            success(res){
+                let authSetting = res.authSetting;
+                console.info(authSetting);
+                let runScop = authSetting['scope.werun'];
+                if(!runScop){
+                    that.getWxRunAuth();
+                }else{
+                    that.checkAndUpdateStep();
+                }
+            }
+            ,fail(res){
+                wx.showToast({
+                    title: "获取授权失败",
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
+        })
+    },
+    
+
+    getWxRunAuth:function(){
+        let that = this;
+        wx.authorize({
+            scope: 'scope.werun',
+            success () {
+                that.checkAndUpdateStep();
+            }
+            ,fail(){ 
+                wx.showModal({
+                    title: '步数授权提醒',
+                    content: '您未开启或关闭了微信运动授权',
+                    confirmText:'去授权',
+                    success (res) {
+                        if (res.confirm) {
+                            wx.openSetting({
+                                success (res) {
+                                    //console.log(res.authSetting)
+                                }
+                            })
+                        }
+                    }
+              })
+            }
+        })
+    },
+
+    checkAndUpdateStep:function(){
+        let jobUserId = this.data.jobUserId;
+        let code = null;
+        util.login().then((res) => {
+            code = res.code;
+            return new Promise(function(resolve){
+                wx.getWeRunData({
+                    success (res) {
+                        // 拿 encryptedData 到开发者后台解密开放数据
+                        resolve(res)             
+                    }
+                    ,fail(res){
+                        wx.showToast({
+                            title: "获取步数失败",
+                            icon: 'none',
+                            duration: 2000
+                        })
+                    }
+                })
+            })
+        }).then((res) => {
+            wx.showLoading({
+                title: '提交中',
+                mask:true
+            })
+            return util.request(api.FinishJobByStep,{
+                code:code,
+                encryptedData:res.encryptedData,
+                iv:res.iv,
+                jobUserId:jobUserId
+            },"POST")
+        }).then((res)=>{
+            wx.hideLoading()
+            if(res.code == 200){
+                wx.showToast({
+                    title: "操作成功",
+                    icon: 'none',
+                    duration: 500,
+                    mask:true
+                })
+                setTimeout(()=>{
+                    wx.reLaunch({
+                        url: '/pages/job-list/job-list?isMineJob=1&state=4&doRefresh=1',
+                    });
+                },500)
+            }else{
+                wx.showToast({
+                    title: res.message,
+                    icon: 'none',
+                    duration: 2000
+                })
+            }
         })
     }
 })

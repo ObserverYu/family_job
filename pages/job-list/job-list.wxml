@@ -57,13 +57,13 @@
 
 					<view class='icon-wrap'>
 							<view class='order-icon-wrap'>
-									<image class='order-icon' wx:if="{{item.createType == 0}}" src='/images/icon/new/tixing.png'>
+									<image class='order-icon' wx:if="{{item.createType == 1}}" src='/images/icon/new/shijian.png'>
 									</image>
-									<image class='order-icon' wx:elif="{{item.createType == 1}}" src='/images/icon/new/shijian.png'>
+									<image class='order-icon' wx:else src='/images/icon/new/tixing.png'>
 									</image>
 							</view>
 							<text class='order-txt' wx:if="{{item.createType == 0}}">指派→</text>
-							<text class='order-txt' wx:elif="{{item.createType == 1}}">监督→</text>
+							<text class='order-txt' wx:else >监督→</text>
 					</view>
 
 					<view class='icon-wrap' bindtap='goUserDetail'>

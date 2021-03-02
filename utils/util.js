@@ -164,6 +164,7 @@ function getUserInfo() {
                 resolve(res);
             },
             fail: function(err) {
+                console.info("获取用户信息失败")
                 reject(err);
             }
         })

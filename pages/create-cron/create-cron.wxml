@@ -127,6 +127,15 @@
             </view>
         </view>
 
+        
+        <view class="a-item" wx:if="{{isCreate == 1}}"> 
+            <view class="default-wrap">
+            <view class="text">立即生效</view>
+                <switch class="switch" checked="{{enableNow == 1 ? true:false}}" bindchange="switchEnableNowChange"></switch>
+            </view>
+        </view>
+        
+
         <view class="a-item">
             <view class="default-wrap">
             <view class="text">  </view>

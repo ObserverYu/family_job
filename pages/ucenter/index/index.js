@@ -97,10 +97,28 @@ Page({
             let userInfo = wx.getStorageSync('userInfo');
             let watchdogId = userInfo.watchdogId;
             if(watchdogId == null || watchdogId == 0){
-                wx.showToast({
-                    title: "您还未设置监督人",
-                    icon: 'none',
-                    duration: 1000
+                user.getUserInfo().then((res)=>{
+                    if(res.code == 200){
+                        let realUserInfo = res.data;
+                        if(realUserInfo.watchdogId == null){
+                            console.info("还是没有")
+                            wx.showToast({
+                                title: "您还未设置监督人",
+                                icon: 'none',
+                                duration: 1000
+                            })
+                        }else{
+                            console.info("有了")
+                            user.checkSendMsgReal(template.RENWUTIXING);
+                            wx.navigateTo({
+                                url: '/pages/create-job/create-job?isCreate='+2+'&userRole=0'
+                            });
+                        }
+                        wx.setStorage({
+                            data: realUserInfo,
+                            key: 'userInfo',
+                          })
+                    }
                 })
                 return;
             }

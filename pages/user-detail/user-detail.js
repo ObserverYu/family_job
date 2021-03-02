@@ -86,6 +86,10 @@ Page({
                         if (res.code === 200) {
                             util.showErrorToast('设置成功');
                             wx.navigateBack();
+                            wx.setStorage({
+                              data: res.data,
+                              key: 'userInfo',
+                            })
                         } else {
                             util.showErrorToast(res.message);
                         }

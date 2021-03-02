@@ -18,6 +18,7 @@ Page({
         familyOwner:0  // 0-暂未加入 1-拥有者  2-成员 3-被邀请中
         ,chosenJobName: ''
         ,chosenJobId: 0
+        ,enableNow:0
     },
 
     bindinputRemark(event) {
@@ -202,11 +203,36 @@ Page({
         let canStep = 0;
         if (status == true) {
             canStep = 1;
+            wx.showModal({
+                cancelColor: 'cancelColor',
+                showCancel:false,
+                title:'说明',
+                content:'若开启则可以通过前一日的微信步数进行抵扣完成',
+                confirmText:'知道了',
+            })
         }
         let cronJob = this.data.cronJob;
         cronJob.canStep = canStep
         this.setData({
             cronJob:cronJob
+        });
+    },
+
+    switchEnableNowChange(e) {
+        let status = e.detail.value;
+        let enableNow = 0;
+        if (status == true) {
+            enableNow = 1;
+            wx.showModal({
+              cancelColor: 'cancelColor',
+              showCancel:false,
+              title:'说明',
+              content:'如选择立即生效,创建成功后任务会立即生成;否则,任务会从下周开始每周一(每日为次日,每月为次月)0时生成',
+              confirmText:'知道了',
+            })
+        }
+        this.setData({
+            enableNow:enableNow
         });
     },
 
@@ -257,6 +283,7 @@ Page({
         let param = this.data.cronJob;
         let jobId = this.data.chosenJobId;
         param.jobId = jobId;
+        param.enableNow = this.data.enableNow;
         wx.showLoading({
             title: '创建中',
             mask:true

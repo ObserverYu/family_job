@@ -18,7 +18,7 @@ Page({
     },
 
     onLoad: function(options) {
-        let res = util.loginNow();
+        
     },
 
     onShow: function() {

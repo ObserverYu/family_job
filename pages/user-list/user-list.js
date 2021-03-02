@@ -71,6 +71,17 @@ Page({
     },
     onUnload: function() {},
     onShow: function() {
+        let type = this.data.type;
+        // 0-任务选择页面进入列表  1-家长进入  2-成员进入 3-家长添加定时任务进入
+        let title = '成员列表'
+        if(type == 0){
+            title = "选择指派对象"
+        }else if(type == 3){
+            title = "选择设置对象"
+        }
+        wx.setNavigationBarTitle({
+            title: title
+        })
         this.getUsers();
     },
 

@@ -60,8 +60,8 @@
         </view>
     </view>
 
-    <view class="li-wrap" wx:if="{{hasFamily}}">
-        <view class="list" bindtap="toUserListPage">
+    <view class="li-wrap" >
+        <view class="list" bindtap="toUserListPage" wx:if="{{hasFamily}}">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/icon-member.png"></image>
@@ -71,7 +71,7 @@
             <view class="arrow"></view>
         </view>
 
-        <view class="list" bindtap="toCronJob">
+        <view class="list" bindtap="toCronJob" wx:if="{{hasFamily}}">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/new/heibaishijian.png"></image>
@@ -91,7 +91,7 @@
             <view class="arrow"></view>
         </view> -->
 
-        <view class="list" bindtap="toCustomizedJobList">
+        <view class="list" bindtap="toCustomizedJobList" wx:if="{{hasFamily}}">
             <view class="list-l">
                 <view class="icon">
                     <image class="img" src="/images/icon/new/zidingyi.png"></image>
@@ -119,9 +119,11 @@
                 <view class="text">关于</view>
             </view>
             <view class="arrow"></view>
-        </view>
+    </view>
 
     </view>
+
+
 
     <view class="invite" wx:if="{{hasUserInfo}}">
         <view class="c-wrap">

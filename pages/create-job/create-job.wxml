@@ -93,20 +93,29 @@
             </view>
         </view>
 
-        <view class="a-item" wx:if="{{isCreate == 1}}">
+        <view class="a-item" >
             <view class="default-wrap">
             <view class="text">可以使用微信步数抵扣</view>
                 <switch class="switch" disabled="{{isCreate == 1 ? false:true}}" checked="{{canStep == 1 ? true:false}}" bindchange="switchChange"></switch>
             </view>
         </view>
 
-        <view class="a-item" wx:if="{{canStep == 1 && isCreate == 1}}">
+        <view class="a-item" wx:if="{{canStep == 1}}">
             <view class="icon">
                 <image class="img" src="/images/icon/new/buxing.png"></image>
             </view>
             <view class="input-wrap">
                 <input wx:if="{{isCreate == 1}}" cursor-spacing='100' class='a-input' type='number' bindinput="bindinputCostStep"  placeholder="输入步数,大于10000"  value="{{costStep}}"></input>
                 <input wx:else cursor-spacing='100' class='a-input' type='number'  disabled="true"   value="抵扣所需步数: {{costStep}}"></input>
+            </view>
+        </view>
+
+        <view class="a-item" wx:if="{{isCreate == 0 && state == 4 && canStep == 1}}">
+            <view class="icon">
+                <image class="img" src="/images/icon/new/paotuan.png"></image>
+            </view>
+            <view class="input-wrap">
+                <input  disabled="true" cursor-spacing='100'  class='a-input'bindinput="bindinputCostStep"   value="步数抵扣完成:{{stepFinish == 1?'是':'否'}}"></input>
             </view>
         </view>
     </view>
@@ -141,8 +150,8 @@
             <view class="cart-empty" bindtap="receiveJobUser">领取</view>
         </block>
 
-        <block wx:if="{{isCreate == 0 && userRole == 0 && state == 1 && canStep == 1}}" bindtap="costStep">
-            <view class="cart-empty" bindtap="costStep">使用步数抵扣</view>
+        <block wx:if="{{isCreate == 0 && userRole == 0 && state == 1 && canStep == 1}}" bindtap="finishByStep">
+            <view class="cart-empty" bindtap="finishByStep">使用步数抵扣</view>
         </block>
 
         <block wx:if="{{isCreate == 0 && userRole == 1 && state == 1}}" bindtap="finish">

@@ -9,6 +9,7 @@ var app = getApp();
  * 调用微信登录
  */
 function loginByWeixin() {
+    console.log("调用登录");
     let code = null;
     return new Promise(function(resolve, reject) {
         return util.login().then((res) => {
