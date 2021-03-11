@@ -85,10 +85,12 @@ function request(url, data = {}, method = "GET") {
                             code = res.code;
                             return getUserInfo();
                         }).then((userInfo) => {
+                            // console.log("获取到的userInfo333:"+userInfo);
+                            // console.log(JSON.stringify(userInfo));
                             //登录远程服务器
                             request(api.AuthLoginByWeixin, {
                                 code: code,
-                                userInfo: userInfo
+                                fullUserInfo: userInfo
                             }, 'POST').then(res => {
                                 if (res.code === 200) {
                                     //存储用户信息
@@ -161,6 +163,8 @@ function getUserInfo() {
         wx.getUserInfo({
             withCredentials: true,
             success: function(res) {
+                // console.log("获取到的userInfo:"+res);
+                // console.log(JSON.stringify(res));
                 resolve(res);
             },
             fail: function(err) {

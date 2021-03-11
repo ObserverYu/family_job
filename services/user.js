@@ -11,15 +11,19 @@ var app = getApp();
 function loginByWeixin() {
     console.log("调用登录");
     let code = null;
+    let userInfoOut = null;
     return new Promise(function(resolve, reject) {
         return util.login().then((res) => {
             code = res.code;
             return util.getUserInfo();
         }).then((userInfo) => {
             //登录远程服务器
-            util.request(api.AuthLoginByWeixin, {
+            userInfoOut = userInfo;
+            // console.log("获取到的userInfo2:"+userInfoOut);
+            // console.log(JSON.stringify(userInfoOut))
+            return util.request(api.AuthLoginByWeixin, {
                 code: code,
-                fullUserInfo: userInfo
+                fullUserInfo: userInfoOut
             }, 'POST').then(res => {
                 if (res.code === 200) {
                     //存储用户信息
